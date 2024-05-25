@@ -36,7 +36,7 @@ const Dashboard = () => {
           lingkungan, tetapi juga memiliki kesempatan untuk mendapatkan manfaat
           dari upaya Anda. Bergabunglah dengan komunitas PayTrash sekarang dan
           mari bersama-sama menjadikan dunia lebih bersih, lebih hijau, dan
-          lebih berkelanjutan.{" "}
+          lebih berkelanjutan.
         </p>
       </div>
     </div>
