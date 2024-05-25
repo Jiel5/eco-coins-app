@@ -1,9 +1,9 @@
 import React from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "../../components/navbar";
-import Sidebar from "../../components/sidebar";
+import SidebarThrower from "../../components/sidebar/SidebarThrower";
 import Footer from "../../components/footer/Footer";
-import routes from "../../routes/admin.routes";
+import routes from "../../routes/thrower.routes";
 
 export default function Admin(props) {
   const { ...rest } = props;
@@ -46,7 +46,7 @@ export default function Admin(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/thrower") {
         return (
           <Route path={`/${prop.path}`} element={prop.component} key={key} />
         );
@@ -59,7 +59,7 @@ export default function Admin(props) {
   document.documentElement.dir = "ltr";
   return (
     <div className="flex h-full w-full">
-      <Sidebar open={open} onClose={() => setOpen(false)} />
+      <SidebarThrower open={open} onClose={() => setOpen(false)} />
       {/* Navbar & Main Content */}
       <div className="h-full w-full bg-lightPrimary dark:!bg-navy-900">
         {/* Main Content */}
@@ -81,7 +81,7 @@ export default function Admin(props) {
 
                 <Route
                   path="/"
-                  element={<Navigate to="/admin/default" replace />}
+                  element={<Navigate to="/thrower/home" replace />}
                 />
               </Routes>
             </div>
