@@ -1,4 +1,5 @@
 const Checkbox = (props) => {
+  // eslint-disable-next-line react/prop-types
   const { extra, color, ...rest } = props;
   return (
     <input

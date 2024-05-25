@@ -1,5 +1,5 @@
 import { MdManageAccounts, MdPeople } from "react-icons/md";
-import Widget from "../../components/widget/Widget";
+import Widget from "../../../components/widget/Widget";
 import { RiExchangeDollarLine } from "react-icons/ri";
 const Dashboard = () => {
   return (

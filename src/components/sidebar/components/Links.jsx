@@ -17,7 +17,7 @@ export function SidebarLinks(props) {
 
   const createLinks = (routes) => {
     return routes.map((route, index) => {
-      if (route.layout === "/admin" || route.layout === "/auth") {
+      if (route.layout === "/picker" || route.layout === "/thrower") {
         return (
           <Link key={index} to={route.layout + "/" + route.path}>
             <div className="relative mb-3 flex hover:cursor-pointer">
@@ -45,7 +45,7 @@ export function SidebarLinks(props) {
                 </p>
               </li>
               {activeRoute(route.path) ? (
-                <div class="absolute right-0 top-px h-7 w-1 rounded-lg bg-green-600 dark:bg-brand-400" />
+                <div className="absolute right-0 top-px h-7 w-1 rounded-lg bg-green-600 dark:bg-brand-400" />
               ) : null}
             </div>
           </Link>
