@@ -5,7 +5,9 @@ import avatar from "../../assets/img/avatars/avatar4.png";
 const Navbar = (props) => {
   // eslint-disable-next-line react/prop-types
   const { onOpenSidenav, brandText } = props;
-
+  const handleLogout = () => {
+    console.log("logout");
+  };
   return (
     <nav className="sticky top-0 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
       <div className="ml-[6px]">
@@ -14,7 +16,7 @@ const Navbar = (props) => {
             className="text-sm font-normal text-navy-700 hover:underline dark:text-white dark:hover:text-white"
             href=" "
           >
-            Pages
+            EcoCoins
             <span className="mx-1 text-sm text-navy-700 hover:text-navy-700 dark:text-white">
               {" "}
               /{" "}
@@ -39,7 +41,7 @@ const Navbar = (props) => {
 
       <div className="relative mt-[3px] flex h-[61px] w-[355px] flex-grow items-center justify-around gap-2  rounded-full bg-white px-2 py-2 shadow-xl shadow-shadow-500 dark:!bg-navy-800 dark:shadow-none md:w-[365px] md:flex-grow-0 md:gap-1 xl:w-[200px] xl:justify-end xl:gap-2">
         <span
-          className="flex cursor-pointer text-xl text-green-600 dark:text-white xl:hidden"
+          className="flex cursor-pointer text-xl text-green-700 dark:text-white xl:hidden"
           onClick={onOpenSidenav}
         >
           <FiAlignJustify className="h-5 w-5" />
@@ -73,24 +75,18 @@ const Navbar = (props) => {
             <div className="h-px w-full bg-gray-200 dark:bg-white/20 " />
 
             <div className="flex flex-col p-4">
-              <a
-                href=" "
+              <Link
+                to="/thrower/profile"
                 className="text-sm text-gray-800 dark:text-white hover:dark:text-white"
               >
                 Profile Settings
-              </a>
-              <a
-                href=" "
-                className="mt-3 text-sm text-gray-800 dark:text-white hover:dark:text-white"
-              >
-                Newsletter Settings
-              </a>
-              <a
-                href=" "
-                className="mt-3 text-sm font-medium text-red-500 transition duration-150 ease-out hover:text-red-500 hover:ease-in"
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="mt-3 text-start text-sm font-medium text-red-500 transition duration-150 ease-out hover:text-red-500 hover:ease-in"
               >
                 Log Out
-              </a>
+              </button>
             </div>
           </div>
         </Dropdown>

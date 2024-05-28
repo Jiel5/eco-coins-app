@@ -17,7 +17,10 @@ export function SidebarLinks(props) {
 
   const createLinks = (routes) => {
     return routes.map((route, index) => {
-      if (route.layout === "/picker" || route.layout === "/thrower") {
+      if (
+        route.layout === "/picker" ||
+        (route.layout === "/thrower" && route.path !== "profile")
+      ) {
         return (
           <Link key={index} to={route.layout + "/" + route.path}>
             <div className="relative mb-3 flex hover:cursor-pointer">
