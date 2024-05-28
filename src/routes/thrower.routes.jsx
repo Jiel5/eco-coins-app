@@ -1,4 +1,4 @@
-import { MdOutlineHistory } from "react-icons/md";
+import { MdOutlineHistory, MdPerson } from "react-icons/md";
 import {
   RiCopperCoinLine,
   RiDashboard2Line,
@@ -10,6 +10,7 @@ import Sampah from "../views/Thrower/sampah/Index";
 import Transaksi from "../views/Thrower/transaksi/Index";
 import Riwayat from "../views/Thrower/riwayat/Index";
 import Koinku from "../views/Thrower/koinku/Index";
+import Profile from "../views/Thrower/profile/Index";
 const ThrowerRoutes = [
   {
     name: "Main Dashboard",
@@ -45,6 +46,13 @@ const ThrowerRoutes = [
     path: "koinku",
     icon: <RiCopperCoinLine className="h-6 w-6" />,
     component: <Koinku />,
+  },
+  {
+    name: "Profile",
+    layout: "/thrower",
+    path: "profile",
+    icon: <MdPerson className="h-6 w-6" />,
+    component: <Profile />,
   },
 ];
 export default ThrowerRoutes;
