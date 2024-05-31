@@ -1,48 +1,41 @@
-import { MdOutlineHistory } from "react-icons/md";
-import {
-  RiCopperCoinLine,
-  RiDashboard2Line,
-  RiExchangeDollarLine,
-} from "react-icons/ri";
+import { RiCopperCoinLine, RiDashboard2Line } from "react-icons/ri";
 import { HiOutlineTrash } from "react-icons/hi";
 import Dashboard from "../views/Thrower/dashboard/Index";
-import Sampah from "../views/Thrower/sampah/Index";
-import Transaksi from "../views/Thrower/transaksi/Index";
-import Riwayat from "../views/Thrower/riwayat/Index";
 import Koinku from "../views/Thrower/koinku/Index";
+import KategoriSampah from "../views/Picker/Kategori/Index";
 const PickerRoutes = [
   {
     name: "Main Dashboard",
-    layout: "/thrower",
+    layout: "/picker",
     path: "home",
     icon: <RiDashboard2Line className="h-6 w-6" />,
     component: <Dashboard />,
   },
   {
-    name: "Buang Sampah",
-    layout: "/thrower",
-    path: "sampah",
+    name: "Ambil Sampah",
+    layout: "/picker",
+    path: "ambil",
     icon: <HiOutlineTrash className="h-6 w-6" />,
-    component: <Sampah />,
+    component: <Koinku />,
   },
   {
-    name: "Transaksi",
-    layout: "/thrower",
-    path: "transaksi",
-    icon: <RiExchangeDollarLine className="h-6 w-6" />,
-    component: <Transaksi />,
+    name: "Kategori Sampah",
+    layout: "/picker",
+    path: "kategori",
+    icon: <HiOutlineTrash className="h-6 w-6" />,
+    component: <KategoriSampah />,
   },
   {
-    name: "Riwayat Transaksi",
-    layout: "/thrower",
-    path: "riwayat",
-    icon: <MdOutlineHistory className="h-6 w-6" />,
-    component: <Riwayat />,
+    name: "Tukar Koin",
+    layout: "/picker",
+    path: "tukar",
+    icon: <RiCopperCoinLine className="h-6 w-6" />,
+    component: <Koinku />,
   },
   {
-    name: "Koinku",
-    layout: "/thrower",
-    path: "koinku",
+    name: "Nilai Koin",
+    layout: "/picker",
+    path: "koin",
     icon: <RiCopperCoinLine className="h-6 w-6" />,
     component: <Koinku />,
   },

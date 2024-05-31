@@ -4,7 +4,7 @@ import { Link, Routes, Route, Navigate } from "react-router-dom";
 import routes from "../../routes/auth.routes";
 import FixedPlugin from "../../components/fixedPlugin/FixedPlugin";
 
-export default function Auth() {
+export default function AuthLama() {
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/auth") {
