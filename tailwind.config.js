@@ -117,6 +117,16 @@ export default {
       borderRadius: {
         primary: "20px",
       },
+      animation: {
+        fade: "fadeOut 5s ease-in-out",
+      },
+      keyframes: (theme) => ({
+        fadeOut: {
+          "0%": { display: "flex", opacity: "1" },
+          "80%": { display: "flex", opacity: "1" },
+          "100%": { display: "none", opacity: "0" },
+        },
+      }),
     },
     screens: {
       sm: "576px",

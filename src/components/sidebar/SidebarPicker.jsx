@@ -22,10 +22,10 @@ const SidebarPicker = ({ open, onClose }) => {
 
       <div className={`mx-[56px] mt-[20px] flex items-center`}>
         <div className="mt-1 ml-1 h-2.5 font-poppins text-[26px] font-bold uppercase text-navy-700 dark:text-white">
-          ECO <span class="font-medium">Coins</span>
+          ECO <span className="font-medium">Coins</span>
         </div>
       </div>
-      <div class="mt-[40px] mb-4 h-px bg-gray-300 dark:bg-white/30" />
+      <div className="mt-[40px] mb-4 h-px bg-gray-300 dark:bg-white/30" />
       {/* Nav item */}
 
       <ul className="mb-auto pt-1">
