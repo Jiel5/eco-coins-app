@@ -1,8 +1,13 @@
-import { RiCopperCoinLine, RiDashboard2Line } from "react-icons/ri";
+import {
+  RiCopperCoinLine,
+  RiDashboard2Line,
+  RiTokenSwapLine,
+} from "react-icons/ri";
 import { HiOutlineTrash } from "react-icons/hi";
 import Dashboard from "../views/Thrower/dashboard/Index";
 import Koinku from "../views/Thrower/koinku/Index";
 import KategoriSampah from "../views/Picker/Kategori/Index";
+import NilaiKoin from "../views/Picker/NilaiKoin/Index";
 const PickerRoutes = [
   {
     name: "Main Dashboard",
@@ -26,17 +31,17 @@ const PickerRoutes = [
     component: <KategoriSampah />,
   },
   {
-    name: "Tukar Koin",
-    layout: "/picker",
-    path: "tukar",
-    icon: <RiCopperCoinLine className="h-6 w-6" />,
-    component: <Koinku />,
-  },
-  {
     name: "Nilai Koin",
     layout: "/picker",
     path: "koin",
     icon: <RiCopperCoinLine className="h-6 w-6" />,
+    component: <NilaiKoin />,
+  },
+  {
+    name: "Tukar Koin",
+    layout: "/picker",
+    path: "tukar",
+    icon: <RiTokenSwapLine className="h-6 w-6" />,
     component: <Koinku />,
   },
 ];

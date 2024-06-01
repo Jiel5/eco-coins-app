@@ -15,7 +15,7 @@ import axios from "axios";
 import Toast from "../../../components/Toast/Index";
 import ModalDelete from "../../../components/modal/ModalDelete";
 
-const KategoriSampah = () => {
+const NilaiKoin = () => {
   const columnsData = columnsDataJenisSampah;
 
   const [globalFilter, setGlobalFilter] = useState("");
@@ -29,15 +29,18 @@ const KategoriSampah = () => {
     type: "",
   });
   const [isEdit, setIsEdit] = useState(false);
-  const [id, setId] = useState("");
+  const [id, setId] = useState(null);
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
 
+  const [nilaiKoin, setNilaiKoin] = useState(null);
+  const [nilaiUang, setNilaiUang] = useState(null);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/sampah`
+        `${import.meta.env.VITE_REACT_APP_API_URL}/nilai-tukar`
       );
       setTableData(response.data);
     } catch (error) {
@@ -96,14 +99,16 @@ const KategoriSampah = () => {
     setTablePageSize(Number(e.target.value));
   };
 
-  const [jenisSampah, setJenisSampah] = useState("");
-  const [nilaiKoin, setNilaiKoin] = useState("");
   const handleAngka = (e) => {
-    const { value } = e.target;
+    const { value, name } = e.target;
     const regex = /^[0-9]*$/;
 
     if (regex.test(value)) {
-      setNilaiKoin(value);
+      if (name === "nilaiUang") {
+        setNilaiUang(value);
+      } else {
+        setNilaiKoin(value);
+      }
     }
   };
 
@@ -119,16 +124,11 @@ const KategoriSampah = () => {
   };
 
   const handleCloseModal = () => {
-    setJenisSampah("");
-    setNilaiKoin("");
+    setNilaiUang(null);
+    setNilaiKoin(null);
     setId("");
     setModalIsOpen(false);
     setIsEdit(false);
-  };
-
-  const handleCloseModalDelete = () => {
-    setModalIsOpenDelete(false);
-    setId("");
   };
 
   const handleSubmit = async (e) => {
@@ -136,16 +136,16 @@ const KategoriSampah = () => {
     if (!isEdit) {
       try {
         const res = await axios.post(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/sampah`,
+          `${import.meta.env.VITE_REACT_APP_API_URL}/nilai-tukar`,
           {
-            jenis_sampah: jenisSampah,
-            nilai_koin_per_kg: Number(nilaiKoin),
+            nilai_koin: Number(nilaiKoin),
+            nilai_uang: Number(nilaiUang),
           }
         );
         handleCloseModal();
         showToastHandler({
           show: true,
-          message: "Kategori sampah ditambahkan!",
+          message: "Nilai Tukar Koin ditambahkan!",
           type: "success",
         });
         fetchData(); // Refresh the data after successful submission
@@ -155,21 +155,21 @@ const KategoriSampah = () => {
     } else {
       try {
         const res = await axios.put(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/sampah/${id}`,
+          `${import.meta.env.VITE_REACT_APP_API_URL}/nilai-tukar/${id}`,
           {
-            jenis_sampah: jenisSampah,
-            nilai_koin_per_kg: Number(nilaiKoin),
+            nilai_koin: Number(nilaiKoin),
+            nilai_uang: Number(nilaiUang),
           }
         );
         handleCloseModal();
         showToastHandler({
           show: true,
-          message: "Kategori sampah diperbarui!",
+          message: "Nilai Tukar Koin diperbarui!",
           type: "update",
         });
         fetchData(); // Refresh the data after successful submission
         setIsEdit(false);
-        setId("");
+        setId(null);
       } catch (error) {
         console.error(error);
       }
@@ -178,16 +178,16 @@ const KategoriSampah = () => {
 
   const handleEdit = (data) => {
     setModalIsOpen(true);
-    setJenisSampah(data.jenis_sampah);
-    setNilaiKoin(data.nilai_koin_per_kg);
-    setId(data.id_sampah);
+    setNilaiKoin(data.nilai_koin);
+    setNilaiUang(data.nilai_uang);
+    setId(data.id_nilai_tukar_koin);
     setIsEdit(true);
   };
 
   const handleDelete = async () => {
     try {
       const res = await axios.delete(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/sampah/${id}`
+        `${import.meta.env.VITE_REACT_APP_API_URL}/nilai-tukar/${id}`
       );
       showToastHandler({
         show: true,
@@ -196,7 +196,7 @@ const KategoriSampah = () => {
       });
       fetchData();
       setModalIsOpenDelete(false);
-      setId("");
+      setId(null);
     } catch (error) {
       console.error(error);
     }
@@ -222,33 +222,33 @@ const KategoriSampah = () => {
       >
         <form className="flex flex-col gap-2 font-sans" onSubmit={handleSubmit}>
           <h2 className="text-xl font-medium font-sans">
-            Form Kategori Sampah
+            Form Nilai Tukar Koin
           </h2>
-          <div id="inputJenis" className="mt-4">
-            <label htmlFor="jenisSampah" className="font-medium">
-              Jenis Sampah
+          <div id="inputNilaiKoin" className="mt-4">
+            <label htmlFor="nilaiKoin" className="font-medium">
+              Nilai Koin
             </label>
             <input
               type="text"
-              id="jenisSampah"
-              name="jenisSampah"
-              value={jenisSampah}
-              onChange={(e) => setJenisSampah(e.target.value)}
-              placeholder="masukkan jenis sampah"
+              id="nilaiKoin"
+              name="nilaiKoin"
+              value={nilaiKoin}
+              onChange={handleAngka}
+              placeholder="masukkan Nilai Koin"
               className="mt-1 text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             />
           </div>
           <div id="inputNilai" className="mt-2">
-            <label htmlFor="password" className="font-medium">
-              Nilai Koin per Kg Sampah
+            <label htmlFor="nilaiUang" className="font-medium">
+              Nilai Uang (Rp)
             </label>
             <input
               type="text"
-              id="nilai"
-              name="nilai"
-              value={nilaiKoin}
+              id="nilaiUang"
+              name="nilaiUang"
+              value={nilaiUang}
               onChange={handleAngka}
-              placeholder="masukkan nilai koin"
+              placeholder="masukkan nilai uang (Rp)"
               className="mt-1 text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             />
           </div>
@@ -274,7 +274,7 @@ const KategoriSampah = () => {
 
       {/* modal delete */}
       <ModalDelete
-        message={"Apakah anda yakin ingin menghapus kategori sampah?"}
+        message={"Apakah anda yakin ingin menghapus nilai tukar koin?"}
         modalIsOpenDelete={modalIsOpenDelete}
         setModalIsOpenDelete={setModalIsOpenDelete}
         handleDelete={handleDelete}
@@ -285,7 +285,7 @@ const KategoriSampah = () => {
         {/* Header */}
         <header className="relative flex items-center justify-between">
           <div className="text-xl font-bold text-navy-700 dark:text-white">
-            Kategori Sampah
+            Nilai Tukar Koin
           </div>
         </header>
         {/* search */}
@@ -374,7 +374,7 @@ const KategoriSampah = () => {
                     </td>
                     {row.cells.map((cell, index) => {
                       let data = "";
-                      if (cell.column.Header === "") {
+                      if (cell.column.Header === "Nilai Koin") {
                         data = (
                           <div className="flex items-center">
                             <p className="text-sm lg:text-md font-semibold text-navy-700 dark:text-white">
@@ -382,11 +382,12 @@ const KategoriSampah = () => {
                             </p>
                           </div>
                         );
-                      } else if (cell.column.Header === "Nilai Koin Per KG") {
+                      } else if (cell.column.Header === "Nilai Uang (Rp)") {
                         data = (
                           <div className="flex items-center">
                             <p className="text-sm lg:text-md font-semibold text-navy-700 dark:text-white">
-                              {cell.value} Koin
+                              Rp.{" "}
+                              {Intl.NumberFormat("id-ID").format(cell.value)}
                             </p>
                           </div>
                         );
@@ -411,7 +412,7 @@ const KategoriSampah = () => {
                       </div>
                       <div
                         onClick={() => {
-                          setId(row.original.id_sampah);
+                          setId(row.original.id_nilai_tukar_koin);
                           setModalIsOpenDelete(true);
                         }}
                         className="w-8 h-8 rounded-lg bg-red-500 cursor-pointer flex justify-center items-center"
@@ -471,4 +472,4 @@ const KategoriSampah = () => {
   );
 };
 
-export default KategoriSampah;
+export default NilaiKoin;
