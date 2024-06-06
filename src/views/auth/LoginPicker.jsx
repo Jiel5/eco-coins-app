@@ -1,10 +1,37 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "../../components/card";
+import axios from "axios";
+import { useState } from "react";
 
 const LoginPicker = () => {
-  const handleLogin = (e) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    alert("login");
+    axios
+      .post(`${import.meta.env.VITE_REACT_APP_API_URL}/login/pengepul`, {
+        email,
+        password,
+      })
+      .then((response) => {
+        console.log("Response:", response);
+        if (response.data.token) {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("role", response.data.role);
+          localStorage.setItem("id_pengepul", response.data.id_pengepul);
+          setMessage("Login successful!");
+          navigate("/picker/home");
+        } else {
+          setMessage("Login failed.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error logging in:", error);
+        setMessage("Error logging in. Please try again.");
+      });
   };
   return (
     <div className="h-screen flex items-center justify-center transition-all">
@@ -35,6 +62,8 @@ const LoginPicker = () => {
               <h3 className="block font-bold text-navy-700 lg:hidden mt-1">
                 LOGIN PICKER
               </h3>
+
+              {message && <p className="text-red-500">{message}</p>}
             </div>
 
             {/* input */}
@@ -47,6 +76,8 @@ const LoginPicker = () => {
                   <input
                     type="email"
                     id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="email@example.com"
                     className="mt-2 text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                   />
@@ -58,6 +89,8 @@ const LoginPicker = () => {
                   <input
                     type="password"
                     placeholder="masukkan password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     id="password"
                     className="mt-2 text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                   />

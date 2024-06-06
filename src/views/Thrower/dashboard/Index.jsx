@@ -24,17 +24,17 @@ const Dashboard = () => {
       <div className="mt-10">
         <h1 className="text-3xl font-sans font-semibold">Tentang Aplikasi</h1>
         <p className="text-justify mt-5">
-          PayTrash adalah platform yang bertujuan untuk membantu Anda mengelola
+          Eco Coins adalah platform yang bertujuan untuk membantu Anda mengelola
           sampah dengan cara yang lebih berkelanjutan dan menguntungkan. Dengan
-          PayTrash, Anda dapat dengan mudah mendaur ulang sampah Anda tanpa
+          Eco Coins, Anda dapat dengan mudah mendaur ulang sampah Anda tanpa
           ribet. Kami menyediakan fasilitas untuk memasukkan jenis dan berat
           sampah Anda, dan dalam sekejap, Anda akan mendapatkan insentif berupa
           koin yang dapat ditukar dengan hadiah atau uang tunai. Kami percaya
           bahwa berkontribusi pada lingkungan yang lebih baik haruslah menjadi
           pengalaman yang mudah dan bermanfaat bagi semua orang. Dengan
-          PayTrash, Anda tidak hanya membantu mengurangi limbah yang mencemari
+          Eco Coins, Anda tidak hanya membantu mengurangi limbah yang mencemari
           lingkungan, tetapi juga memiliki kesempatan untuk mendapatkan manfaat
-          dari upaya Anda. Bergabunglah dengan komunitas PayTrash sekarang dan
+          dari upaya Anda. Bergabunglah dengan komunitas Eco Coins sekarang dan
           mari bersama-sama menjadikan dunia lebih bersih, lebih hijau, dan
           lebih berkelanjutan.
         </p>

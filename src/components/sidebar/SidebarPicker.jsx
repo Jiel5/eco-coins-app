@@ -30,6 +30,7 @@ const SidebarPicker = ({ open, onClose }) => {
 
       <ul className="mb-auto pt-1">
         <Links routes={routes} />
+        
       </ul>
 
       {/* Nav item end */}

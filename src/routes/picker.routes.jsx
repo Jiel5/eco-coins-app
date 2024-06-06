@@ -6,8 +6,8 @@ import {
 import { HiOutlineTrash } from "react-icons/hi";
 import Dashboard from "../views/Thrower/dashboard/Index";
 import Koinku from "../views/Thrower/koinku/Index";
-import KategoriSampah from "../views/Picker/Kategori/Index";
-import NilaiKoin from "../views/Picker/NilaiKoin/Index";
+import KategoriSampah from "../views/picker/Kategori";
+import NilaiKoin from "../views/picker/NilaiKoin";
 const PickerRoutes = [
   {
     name: "Main Dashboard",
