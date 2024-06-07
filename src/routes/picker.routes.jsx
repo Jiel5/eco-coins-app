@@ -5,18 +5,12 @@ import {
 } from "react-icons/ri";
 import { HiOutlineTrash } from "react-icons/hi";
 import Dashboard from "../views/Thrower/dashboard/Index";
-<<<<<<< HEAD
 import KategoriSampah from "../views/Picker/Kategori/Index";
 import NilaiKoin from "../views/Picker/NilaiKoin/Index";
 import TukarKoin from "../views/Picker/TukarKoin/Index";
 import AmbilSampah from "../views/Picker/AmbilSampah/Index";
 import { MdPerson } from "react-icons/md";
 import ProfilePicker from "../views/Picker/Profile/Index";
-=======
-import Koinku from "../views/Thrower/koinku/Index";
-import KategoriSampah from "../views/picker/Kategori";
-import NilaiKoin from "../views/picker/NilaiKoin";
->>>>>>> 9ed8d07a998326069cc5ab2a70b6eff537d97988
 const PickerRoutes = [
   {
     name: "Main Dashboard",

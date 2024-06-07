@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Card from "../../components/card";
 import { useState } from "react";
+import axios from "axios";
 
 const RegisterPicker = () => {
   const [data, setData] = useState({
@@ -67,6 +68,7 @@ const RegisterPicker = () => {
                   <input
                     type="text"
                     id="nama"
+                    name="nama"
                     placeholder="nama lengkap"
                     onChange={handleChange}
                     className=" text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
@@ -79,6 +81,7 @@ const RegisterPicker = () => {
                   <input
                     type="text"
                     id="alamat"
+                    name="alamat"
                     onChange={handleChange}
                     placeholder="lamat lengkap"
                     className=" text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"

@@ -11,7 +11,7 @@ const LoginThrower = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     axios
-      .post(`${import.meta.env.VITE_REACT_APP_API_URL}/login/pengguna`, {
+      .post(`${import.meta.env.VITE_REACT_APP_API_URL}/login`, {
         email,
         password,
       })
@@ -20,7 +20,7 @@ const LoginThrower = () => {
         if (response.data.token) {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("role", response.data.role);
-          localStorage.setItem("id_pengepul", response.data.id_pengepul);
+          localStorage.setItem("id_pengguna", response.data.id_pengepul);
           setMessage("Login successful!");
           navigate("/thrower/home");
         } else {
