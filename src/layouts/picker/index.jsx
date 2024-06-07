@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Navbar from "../../components/navbar/NavbarPicker";
+import Navbar from "../../components/navbar";
+import Footer from "../../components/footer/Footer";
 import routes from "../../routes/picker.routes";
-import SidebarPicker from "../../components/sidebar/SidebarPicker";
 
 export default function Admin(props) {
   const { ...rest } = props;
@@ -58,7 +58,7 @@ export default function Admin(props) {
   document.documentElement.dir = "ltr";
   return (
     <div className="flex h-full w-full">
-      <SidebarPicker open={open} onClose={() => setOpen(false)} />
+      <Sidebar open={open} onClose={() => setOpen(false)} />
       {/* Navbar & Main Content */}
       <div className="h-full w-full bg-lightPrimary dark:!bg-navy-900">
         {/* Main Content */}
@@ -83,6 +83,9 @@ export default function Admin(props) {
                   element={<Navigate to="/picker/home" replace />}
                 />
               </Routes>
+            </div>
+            <div className="p-3">
+              <Footer />
             </div>
           </div>
         </main>
