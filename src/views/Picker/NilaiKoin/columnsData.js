@@ -1,4 +1,4 @@
-export const columnsDataJenisSampah = [
+export const columnsDataNilaiKoin = [
   {
     Header: "Nilai Koin",
     accessor: "nilai_koin",
