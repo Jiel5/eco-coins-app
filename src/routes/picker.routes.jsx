@@ -5,9 +5,12 @@ import {
 } from "react-icons/ri";
 import { HiOutlineTrash } from "react-icons/hi";
 import Dashboard from "../views/Thrower/dashboard/Index";
-import Koinku from "../views/Thrower/koinku/Index";
 import KategoriSampah from "../views/Picker/Kategori/Index";
 import NilaiKoin from "../views/Picker/NilaiKoin/Index";
+import TukarKoin from "../views/Picker/TukarKoin/Index";
+import AmbilSampah from "../views/Picker/AmbilSampah/Index";
+import { MdPerson } from "react-icons/md";
+import ProfilePicker from "../views/Picker/Profile/Index";
 const PickerRoutes = [
   {
     name: "Main Dashboard",
@@ -21,7 +24,7 @@ const PickerRoutes = [
     layout: "/picker",
     path: "ambil",
     icon: <HiOutlineTrash className="h-6 w-6" />,
-    component: <Koinku />,
+    component: <AmbilSampah />,
   },
   {
     name: "Kategori Sampah",
@@ -42,7 +45,14 @@ const PickerRoutes = [
     layout: "/picker",
     path: "tukar",
     icon: <RiTokenSwapLine className="h-6 w-6" />,
-    component: <Koinku />,
+    component: <TukarKoin />,
+  },
+  {
+    name: "Profile",
+    layout: "/picker",
+    path: "profile",
+    icon: <MdPerson className="h-6 w-6" />,
+    component: <ProfilePicker />,
   },
 ];
 export default PickerRoutes;

@@ -5,18 +5,90 @@ import {
   useSortBy,
   useTable,
 } from "react-table";
-import { BiTrash } from "react-icons/bi";
 import Card from "../../../components/card";
-import { columnsDataJenisSampah } from "./columnsData";
+import { columnsDataAmbilSampah } from "./columnsData";
 import ModalComponent from "../../../components/modal";
-import { FaPlusCircle } from "react-icons/fa";
 import { MdEdit, MdSearch } from "react-icons/md";
 import axios from "axios";
 import Toast from "../../../components/Toast/Index";
 import ModalDelete from "../../../components/modal/ModalDelete";
 
-const KategoriSampah = () => {
-  const columnsData = columnsDataJenisSampah;
+const dataPengepul = {
+  id_pengepul: 1,
+};
+
+const AlamatPembuang = ({ id }) => {
+  const [alamat, setAlamat] = useState("");
+  const getAlamat = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/pengguna/${id}`
+      );
+      setAlamat(response.data.alamat);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getAlamat();
+  });
+
+  return <span>{alamat}</span>;
+};
+const NamaPengepul = ({ id }) => {
+  const [nama, setNama] = useState("");
+  const getNamaPengepul = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/pengepul/${id}`
+      );
+      setNama(response.data.nama);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getNamaPengepul();
+  });
+
+  return <span>{nama}</span>;
+};
+const JumlahKoin = ({ id }) => {
+  const [koin, setKoin] = useState(null);
+  const getJumlahKoin = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/nilai-tukar/${id}`
+      );
+      setKoin(response.data.nilai_koin);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getJumlahKoin();
+  });
+
+  return <span>{koin}</span>;
+};
+
+const FormatTanggal = ({ tanggal }) => {
+  const date = new Date(tanggal);
+
+  const year = date.getUTCFullYear();
+  let month = date.getUTCMonth() + 1; // getUTCMonth() returns month from 0-11
+  month = month < 10 ? "0" + month : month; // Add "0" if month < 10
+  let day = date.getUTCDate();
+  day = day < 10 ? "0" + day : day;
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+  const seconds = date.getUTCSeconds();
+  const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+  return <span>{formattedDate}</span>;
+};
+
+const AmbilSampah = () => {
+  const columnsData = columnsDataAmbilSampah;
 
   const [globalFilter, setGlobalFilter] = useState("");
   const [pageSize, setPageSize] = useState(10);
@@ -37,9 +109,13 @@ const KategoriSampah = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/sampah`
+        `${import.meta.env.VITE_REACT_APP_API_URL}/transaksi-sampah/pengepul/${
+          dataPengepul.id_pengepul
+        }`
       );
+
       setTableData(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -58,7 +134,7 @@ const KategoriSampah = () => {
         globalFilter,
         sortBy: [
           {
-            id: "id_sampah", // Change this to the actual ID column key
+            id: "id_transaksi", // Change this to the actual ID column key
             desc: true,
           },
         ],
@@ -96,16 +172,18 @@ const KategoriSampah = () => {
     setTablePageSize(Number(e.target.value));
   };
 
-  const [jenisSampah, setJenisSampah] = useState("");
-  const [nilaiKoin, setNilaiKoin] = useState("");
-  const handleAngka = (e) => {
-    const { value } = e.target;
-    const regex = /^[0-9]*$/;
+  const [dataPenukaran, setDataPenukaran] = useState({
+    id_transaksi: null,
+    namaPengguna: null,
+    alamat: null,
+    jenisSampah: null,
+    berat: null,
+    jumlahKoin: null,
+    tanggal: null,
+    status: null,
+  });
 
-    if (regex.test(value)) {
-      setNilaiKoin(value);
-    }
-  };
+  const [statusPenukaran, setStatusPenukaran] = useState(null);
 
   const showToastHandler = ({ show, message, type }) => {
     setToast({
@@ -119,88 +197,66 @@ const KategoriSampah = () => {
   };
 
   const handleCloseModal = () => {
-    setJenisSampah("");
-    setNilaiKoin("");
-    setId("");
     setModalIsOpen(false);
     setIsEdit(false);
   };
 
-  const handleCloseModalDelete = () => {
-    setModalIsOpenDelete(false);
-    setId("");
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isEdit) {
-      try {
-        const res = await axios.post(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/sampah`,
-          {
-            jenis_sampah: jenisSampah,
-            nilai_koin_per_kg: Number(nilaiKoin),
-          }
-        );
-        handleCloseModal();
-        showToastHandler({
-          show: true,
-          message: "Kategori sampah ditambahkan!",
-          type: "success",
-        });
-        fetchData(); // Refresh the data after successful submission
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      try {
-        const res = await axios.put(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/sampah/${id}`,
-          {
-            jenis_sampah: jenisSampah,
-            nilai_koin_per_kg: Number(nilaiKoin),
-          }
-        );
-        handleCloseModal();
-        showToastHandler({
-          show: true,
-          message: "Kategori sampah diperbarui!",
-          type: "update",
-        });
-        fetchData(); // Refresh the data after successful submission
-        setIsEdit(false);
-        setId("");
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-
-  const handleEdit = (data) => {
-    setModalIsOpen(true);
-    setJenisSampah(data.jenis_sampah);
-    setNilaiKoin(data.nilai_koin_per_kg);
-    setId(data.id_sampah);
-    setIsEdit(true);
-  };
-
-  const handleDelete = async () => {
     try {
-      const res = await axios.delete(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/sampah/${id}`
+      if (statusPenukaran === "diterima") {
+        const response = await axios.post(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/transaksi-sampah/${
+            dataPenukaran.id_transaksi
+          }/verify`,
+          {
+            id_penukaran: dataPenukaran.id_penukaran,
+          }
+        );
+      } else if (statusPenukaran === "ditolak") {
+        const response = await axios.post(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/transaksi-sampah/${
+            dataPenukaran.id_transaksi
+          }/reject`,
+          {
+            id_penukaran: dataPenukaran.id_penukaran,
+          }
+        );
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    fetchData();
+    handleCloseModal();
+    showToastHandler({
+      show: true,
+      message: "Penukaran Koin diperbarui!",
+      type: "update",
+    });
+  };
+
+  const handleEdit = async (data) => {
+    setModalIsOpen(true);
+    try {
+      const getPenukar = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/pengguna/${data.id_pengguna}`
       );
-      showToastHandler({
-        show: true,
-        message: "Kategori sampah dihapus!",
-        type: "delete",
+      setDataPenukaran({
+        id_transaksi: data.id_transaksi,
+        namaPengguna: data.Pengguna.nama,
+        jumlahKoin: data.jumlah_koin,
+        jenisSampah: data.Sampah.jenis_sampah,
+        alamat: getPenukar.data.alamat,
+        berat: data.berat_kg,
+        tanggal: data.tanggal,
+        status: data.status,
       });
-      fetchData();
-      setModalIsOpenDelete(false);
-      setId("");
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
     <>
       {/* toast */}
@@ -221,10 +277,34 @@ const KategoriSampah = () => {
         onRequestClose={() => setModalIsOpen(false)}
       >
         <form className="flex flex-col gap-2 font-sans" onSubmit={handleSubmit}>
-          <h2 className="text-xl font-medium font-sans">
-            Form Kategori Sampah
-          </h2>
-          <div id="inputJenis" className="mt-4">
+          <h2 className="text-xl font-medium font-sans">Form Ambil Sampah</h2>
+          <div id="inputNama" className="mt-4">
+            <label htmlFor="nama" className="font-medium">
+              Nama Pembuang
+            </label>
+            <input
+              type="text"
+              id="nama"
+              name="nama"
+              defaultValue={dataPenukaran.namaPengguna}
+              readOnly
+              className="mt-1 bg-gray-100 text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+            />
+          </div>
+          <div id="inputJumlahKoin" className="mt-2">
+            <label htmlFor="alamat" className="font-medium">
+              Alamat
+            </label>
+            <input
+              type="text"
+              id="alamat"
+              name="alamat"
+              readOnly
+              defaultValue={dataPenukaran.alamat}
+              className="mt-1 bg-gray-100 text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+            />
+          </div>
+          <div id="inputJumlahUang" className="mt-2">
             <label htmlFor="jenisSampah" className="font-medium">
               Jenis Sampah
             </label>
@@ -232,27 +312,83 @@ const KategoriSampah = () => {
               type="text"
               id="jenisSampah"
               name="jenisSampah"
-              value={jenisSampah}
-              onChange={(e) => setJenisSampah(e.target.value)}
-              placeholder="masukkan jenis sampah"
-              className="mt-1 text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+              value={dataPenukaran.jenisSampah}
+              readOnly
+              className="mt-1 bg-gray-100 text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             />
           </div>
-          <div id="inputNilai" className="mt-2">
-            <label htmlFor="password" className="font-medium">
-              Nilai Koin per Kg Sampah
+          <div id="inputJumlah" className="mt-2">
+            <label htmlFor="berat" className="font-medium">
+              Berat
             </label>
             <input
               type="text"
-              id="nilai"
-              name="nilai"
-              value={nilaiKoin}
-              onChange={handleAngka}
-              placeholder="masukkan nilai koin"
-              className="mt-1 text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+              id="berat"
+              name="berat"
+              defaultValue={dataPenukaran.berat}
+              readOnly
+              className="mt-1 bg-gray-100 text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+            />
+          </div>
+          <div id="inputJumlah" className="mt-2">
+            <label htmlFor="JumlahKoin" className="font-medium">
+              Jumlah Koin
+            </label>
+            <input
+              type="number"
+              id="JumlahKoin"
+              name="JumlahKoin"
+              defaultValue={dataPenukaran.jumlahKoin}
+              readOnly
+              className="mt-1 bg-gray-100 text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+            />
+          </div>
+          <div id="inputJumlah" className="mt-2">
+            <label htmlFor="tanggalTukar" className="font-medium">
+              Tanggal
+            </label>
+            <input
+              type="text"
+              id="tanggalTukar"
+              name="tanggalTukar"
+              readOnly
+              defaultValue={dataPenukaran.tanggal}
+              className="mt-1 bg-gray-100 text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             />
           </div>
 
+          <div id="inputJumlah" className="mt-2">
+            <label htmlFor="keterangan" className="font-medium">
+              Status
+            </label>
+            <select
+              id="keterangan"
+              className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={(e) => {
+                setStatusPenukaran(e.target.value);
+              }}
+              defaultValue={dataPenukaran.status}
+            >
+              <option
+                value="pending"
+                selected={dataPenukaran.status === "pending"}
+              >
+                Pending
+              </option>
+              <option
+                value="diterima"
+                selected={dataPenukaran.status === "diterima"}
+              >
+                Diterima
+              </option>
+              <option
+                value="ditolak"
+                selected={dataPenukaran.status === "ditolak"}
+              >
+                Ditolak
+              </option>
+            </select>
+          </div>
           <div className="mt-3 justify-end flex gap-1">
             <button
               type="button"
@@ -263,39 +399,29 @@ const KategoriSampah = () => {
             </button>
             <button
               type="submit"
-              className=" bg-blue-500  text-white font-medium py-1 px-4 rounded-md font-sans"
+              className={` text-white font-medium py-1 px-4 rounded-md font-sans ${
+                dataPenukaran.status === "diterima"
+                  ? "bg-gray-700"
+                  : "bg-blue-500"
+              }`}
+              disabled={dataPenukaran.status === "diterima"}
             >
-              {isEdit ? "Update" : "Simpan"}
+              Update
             </button>
           </div>
         </form>
       </ModalComponent>
       {/* modal end */}
 
-      {/* modal delete */}
-      <ModalDelete
-        message={"Apakah anda yakin ingin menghapus kategori sampah?"}
-        modalIsOpenDelete={modalIsOpenDelete}
-        setModalIsOpenDelete={setModalIsOpenDelete}
-        handleDelete={handleDelete}
-      />
-      {/* modalDelete */}
-
       <Card extra={"w-full sm:overflow-auto p-4"}>
         {/* Header */}
         <header className="relative flex items-center justify-between">
           <div className="text-xl font-bold text-navy-700 dark:text-white">
-            Kategori Sampah
+            Penukaran Koin
           </div>
         </header>
         {/* search */}
         <div className="flex items-center w-full mt-2 justify-between">
-          <button
-            onClick={() => setModalIsOpen(true)}
-            className="px-6 py-2 lg:text-lg mr-8 bg-green-500 text-white rounded hover:bg-green-600 flex items-center"
-          >
-            <FaPlusCircle className="mr-2 w-4 h-4" /> Tambah
-          </button>
           <div className="flex items-center w-full justify-end">
             <select
               value={pageSize}
@@ -374,20 +500,72 @@ const KategoriSampah = () => {
                     </td>
                     {row.cells.map((cell, index) => {
                       let data = "";
-                      if (cell.column.Header === "Jenis Sampah") {
+                      if (cell.column.Header === "Pembuang") {
                         data = (
                           <div className="flex items-center">
                             <p className="text-sm lg:text-md font-semibold text-navy-700 dark:text-white">
-                              {cell.value}
+                              {cell.value.nama}
                             </p>
                           </div>
                         );
-                      } else if (cell.column.Header === "Nilai Koin Per KG") {
+                      } else if (cell.column.Header === "Alamat") {
+                        data = (
+                          <div className="flex items-center">
+                            <p className="text-sm lg:text-md font-semibold text-navy-700 dark:text-white">
+                              <AlamatPembuang id={cell.value} />
+                            </p>
+                          </div>
+                        );
+                      } else if (cell.column.Header === "Jenis sampah") {
+                        data = (
+                          <div className="flex items-center">
+                            <p className="text-sm lg:text-md font-semibold text-navy-700 dark:text-white">
+                              {cell.value.jenis_sampah}
+                            </p>
+                          </div>
+                        );
+                      } else if (cell.column.Header === "Berat") {
+                        data = (
+                          <div className="flex items-center">
+                            <p className="text-sm lg:text-md font-semibold text-navy-700 dark:text-white">
+                              {cell.value} Kg
+                            </p>
+                          </div>
+                        );
+                      } else if (cell.column.Header === "Jumlah Koin") {
                         data = (
                           <div className="flex items-center">
                             <p className="text-sm lg:text-md font-semibold text-navy-700 dark:text-white">
                               {cell.value} Koin
                             </p>
+                          </div>
+                        );
+                      } else if (cell.column.Header === "Tanggal") {
+                        data = (
+                          <div className="flex items-center">
+                            <p className="text-sm lg:text-md font-semibold text-navy-700 dark:text-white">
+                              <FormatTanggal tanggal={cell.value} />
+                            </p>
+                          </div>
+                        );
+                      } else if (cell.column.Header === "Status") {
+                        data = (
+                          <div className="flex items-center">
+                            <div className="text-sm lg:text-md font-semibold text-navy-700 dark:text-white">
+                              {cell.value === "pending" ? (
+                                <p className="px-2 py-1 bg-gray-300 rounded">
+                                  Pending
+                                </p>
+                              ) : cell.value === "diterima" ? (
+                                <p className="px-2 py-1 bg-green-300 rounded">
+                                  Diterima
+                                </p>
+                              ) : (
+                                <p className="px-2 py-1 bg-red-300 rounded">
+                                  Ditolak
+                                </p>
+                              )}
+                            </div>
                           </div>
                         );
                       }
@@ -408,15 +586,6 @@ const KategoriSampah = () => {
                         className="w-8 h-8 rounded-lg bg-blue-500 cursor-pointer flex justify-center items-center"
                       >
                         <MdEdit className=" text-white text-2xl" />
-                      </div>
-                      <div
-                        onClick={() => {
-                          setId(row.original.id_sampah);
-                          setModalIsOpenDelete(true);
-                        }}
-                        className="w-8 h-8 rounded-lg bg-red-500 cursor-pointer flex justify-center items-center"
-                      >
-                        <BiTrash className="cursor-pointer text-white text-2xl" />
                       </div>
                     </td>
                   </tr>
@@ -471,4 +640,4 @@ const KategoriSampah = () => {
   );
 };
 
-export default KategoriSampah;
+export default AmbilSampah;
