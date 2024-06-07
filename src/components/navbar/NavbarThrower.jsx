@@ -2,13 +2,8 @@ import Dropdown from "../dropdown/index";
 import { FiAlignJustify } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import avatar from "../../assets/img/avatars/avatar4.png";
-<<<<<<< HEAD:src/components/navbar/NavbarThrower.jsx
-const NavbarThrower = (props) => {
-=======
 import { useEffect, useState } from "react";
-
-const Navbar = (props) => {
->>>>>>> 9ed8d07a998326069cc5ab2a70b6eff537d97988:src/components/navbar/index.jsx
+const NavbarThrower = (props) => {
   // eslint-disable-next-line react/prop-types
   const { onOpenSidenav, brandText } = props;
   const handleLogout = () => {
@@ -22,9 +17,8 @@ const Navbar = (props) => {
   useEffect(() => {
     const token = localStorage.getItem("token"); // Get token from localStorage
     const role = localStorage.getItem("role"); // Get token from localStorage
-    const id_pengepul = localStorage.getItem("id_pengepul"); // Get token from localStorage
     const id_pengguna = localStorage.getItem("id_pengguna"); // Get token from localStorage
-    fetch(`http://localhost:9000/${role}/${id_pengepul || id_pengguna}`, {
+    fetch(`http://localhost:9000/${role}/${id_pengguna}`, {
       headers: {
         Authorization: `Bearer ${token}`, // Include token in Authorization header
       },
@@ -92,11 +86,7 @@ const Navbar = (props) => {
         <div className="p-4">
           <div className="flex items-center gap-2">
             <p className="text-sm font-bold text-navy-700 dark:text-white">
-<<<<<<< HEAD:src/components/navbar/NavbarThrower.jsx
-              👋 Hey, Thrower
-=======
               👋 {data.nama}
->>>>>>> 9ed8d07a998326069cc5ab2a70b6eff537d97988:src/components/navbar/index.jsx
             </p>{" "}
           </div>
         </div>
@@ -115,11 +105,7 @@ const Navbar = (props) => {
             <div className="p-4">
               <div className="flex items-center gap-2">
                 <p className="text-sm font-bold text-navy-700 dark:text-white">
-<<<<<<< HEAD:src/components/navbar/NavbarThrower.jsx
-                  👋 Hey, Thrower
-=======
                   👋 {data.nama}
->>>>>>> 9ed8d07a998326069cc5ab2a70b6eff537d97988:src/components/navbar/index.jsx
                 </p>{" "}
               </div>
             </div>
