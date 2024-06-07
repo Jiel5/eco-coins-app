@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useMemo, useEffect } from "react";
 import {
   useGlobalFilter,
@@ -36,8 +37,14 @@ const KategoriSampah = () => {
 
   const fetchData = async () => {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/sampah`
+        `${import.meta.env.VITE_REACT_APP_API_URL}/sampah`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in Authorization header
+          },
+        }
       );
       setTableData(response.data);
     } catch (error) {
@@ -126,6 +133,7 @@ const KategoriSampah = () => {
     setIsEdit(false);
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleCloseModalDelete = () => {
     setModalIsOpenDelete(false);
     setId("");
@@ -135,11 +143,17 @@ const KategoriSampah = () => {
     e.preventDefault();
     if (!isEdit) {
       try {
+        const token = localStorage.getItem("token");
         const res = await axios.post(
           `${import.meta.env.VITE_REACT_APP_API_URL}/sampah`,
           {
             jenis_sampah: jenisSampah,
             nilai_koin_per_kg: Number(nilaiKoin),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Include token in Authorization header
+            },
           }
         );
         handleCloseModal();
@@ -154,6 +168,7 @@ const KategoriSampah = () => {
       }
     } else {
       try {
+        // eslint-disable-next-line no-unused-vars
         const res = await axios.put(
           `${import.meta.env.VITE_REACT_APP_API_URL}/sampah/${id}`,
           {
@@ -161,6 +176,8 @@ const KategoriSampah = () => {
             nilai_koin_per_kg: Number(nilaiKoin),
           }
         );
+        
+
         handleCloseModal();
         showToastHandler({
           show: true,
@@ -184,23 +201,30 @@ const KategoriSampah = () => {
     setIsEdit(true);
   };
 
-  const handleDelete = async () => {
-    try {
-      const res = await axios.delete(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/sampah/${id}`
-      );
-      showToastHandler({
-        show: true,
-        message: "Kategori sampah dihapus!",
-        type: "delete",
-      });
-      fetchData();
-      setModalIsOpenDelete(false);
-      setId("");
-    } catch (error) {
-      console.error(error);
-    }
-  };
+const handleDelete = async () => {
+  try {
+    const token = localStorage.getItem("token"); // Retrieve token from localStorage
+    const res = await axios.delete(
+      `${import.meta.env.VITE_REACT_APP_API_URL}/sampah/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include token in Authorization header
+        },
+      }
+    );
+
+    showToastHandler({
+      show: true,
+      message: "Kategori sampah dihapus!",
+      type: "delete",
+    });
+    fetchData();
+    setModalIsOpenDelete(false);
+    setId("");
+  } catch (error) {
+    console.error(error);
+  }
+};
   return (
     <>
       {/* toast */}

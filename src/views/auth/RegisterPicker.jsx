@@ -1,10 +1,34 @@
 import { Link } from "react-router-dom";
 import Card from "../../components/card";
+import { useState } from "react";
 
 const RegisterPicker = () => {
-  const handleSubmit = (e) => {
+  const [data, setData] = useState({
+    nama: "",
+    telepon: "",
+    alamat: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("register");
+    if (data.password !== data.confirmPassword) {
+      console.log(data);
+    } else {
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/pengepul`,
+          data
+        );
+        console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
   return (
     <div className="h-screen flex items-center justify-center transition-all">
@@ -44,6 +68,7 @@ const RegisterPicker = () => {
                     type="text"
                     id="nama"
                     placeholder="nama lengkap"
+                    onChange={handleChange}
                     className=" text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                   />
                 </div>
@@ -54,6 +79,7 @@ const RegisterPicker = () => {
                   <input
                     type="text"
                     id="alamat"
+                    onChange={handleChange}
                     placeholder="lamat lengkap"
                     className=" text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                   />
@@ -65,6 +91,8 @@ const RegisterPicker = () => {
                   <input
                     type="email"
                     id="email"
+                    name="email"
+                    onChange={handleChange}
                     placeholder="email@example.com"
                     className=" text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                   />
@@ -76,6 +104,8 @@ const RegisterPicker = () => {
                   <input
                     type="tel"
                     id="handphone"
+                    name="telepon"
+                    onChange={handleChange}
                     placeholder="masukkan nomor handphone"
                     className=" text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                   />
@@ -88,6 +118,8 @@ const RegisterPicker = () => {
                     type="password"
                     placeholder="masukkan password"
                     id="password"
+                    name="password"
+                    onChange={handleChange}
                     className=" text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                   />
                 </div>
@@ -99,6 +131,8 @@ const RegisterPicker = () => {
                     type="password"
                     placeholder="masukkan ulang password"
                     id="confirmPassword"
+                    name="confirmPassword"
+                    onChange={handleChange}
                     className=" text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                   />
                 </div>

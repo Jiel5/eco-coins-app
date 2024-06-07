@@ -93,15 +93,12 @@ const AmbilSampah = () => {
   const [globalFilter, setGlobalFilter] = useState("");
   const [pageSize, setPageSize] = useState(10);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modalIsOpenDelete, setModalIsOpenDelete] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [toast, setToast] = useState({
     show: false,
     message: "",
     type: "",
   });
-  const [isEdit, setIsEdit] = useState(false);
-  const [id, setId] = useState("");
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);

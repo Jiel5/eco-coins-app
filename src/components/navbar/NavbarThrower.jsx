@@ -2,12 +2,55 @@ import Dropdown from "../dropdown/index";
 import { FiAlignJustify } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import avatar from "../../assets/img/avatars/avatar4.png";
+<<<<<<< HEAD:src/components/navbar/NavbarThrower.jsx
 const NavbarThrower = (props) => {
+=======
+import { useEffect, useState } from "react";
+
+const Navbar = (props) => {
+>>>>>>> 9ed8d07a998326069cc5ab2a70b6eff537d97988:src/components/navbar/index.jsx
   // eslint-disable-next-line react/prop-types
   const { onOpenSidenav, brandText } = props;
   const handleLogout = () => {
     console.log("logout");
   };
+
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // Get token from localStorage
+    const role = localStorage.getItem("role"); // Get token from localStorage
+    const id_pengepul = localStorage.getItem("id_pengepul"); // Get token from localStorage
+    const id_pengguna = localStorage.getItem("id_pengguna"); // Get token from localStorage
+    fetch(`http://localhost:9000/${role}/${id_pengepul || id_pengguna}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Include token in Authorization header
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
   return (
     <nav className="sticky top-0 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
       <div className="ml-[6px]">
@@ -49,7 +92,11 @@ const NavbarThrower = (props) => {
         <div className="p-4">
           <div className="flex items-center gap-2">
             <p className="text-sm font-bold text-navy-700 dark:text-white">
+<<<<<<< HEAD:src/components/navbar/NavbarThrower.jsx
               👋 Hey, Thrower
+=======
+              👋 {data.nama}
+>>>>>>> 9ed8d07a998326069cc5ab2a70b6eff537d97988:src/components/navbar/index.jsx
             </p>{" "}
           </div>
         </div>
@@ -68,7 +115,11 @@ const NavbarThrower = (props) => {
             <div className="p-4">
               <div className="flex items-center gap-2">
                 <p className="text-sm font-bold text-navy-700 dark:text-white">
+<<<<<<< HEAD:src/components/navbar/NavbarThrower.jsx
                   👋 Hey, Thrower
+=======
+                  👋 {data.nama}
+>>>>>>> 9ed8d07a998326069cc5ab2a70b6eff537d97988:src/components/navbar/index.jsx
                 </p>{" "}
               </div>
             </div>
