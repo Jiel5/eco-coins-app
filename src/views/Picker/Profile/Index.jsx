@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import Card from "../../../components/card";
 import axios from "axios";
 const data = {
-  id_pengguna: 1,
+  id_pengepul: 1,
 };
 
 const ProfilePicker = () => {
-  const [dataPengguna, setDataPengguna] = useState({
+  const [dataPicker, setDataPicker] = useState({
     nama: null,
     telepon: null,
     alamat: null,
@@ -19,27 +19,27 @@ const ProfilePicker = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/pengguna/${
-            data.id_pengguna
+          `${import.meta.env.VITE_REACT_APP_API_URL}/pengepul/${
+            data.id_pengepul
           }`
         );
-        setDataPengguna(response.data);
+        setDataPicker(response.data);
       } catch (error) {
         console.error(error);
       }
     };
 
-    if (data?.id_pengguna) {
+    if (data?.id_pengepul) {
       fetchData();
     }
-  }, [data?.id_pengguna]);
+  }, [data?.id_pengepul]);
   const handleSubmit = async () => {
     try {
       const response = await axios.put(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/pengguna/${
-          data.id_pengguna
+        `${import.meta.env.VITE_REACT_APP_API_URL}/pengepul/${
+          data.id_pengepul
         }`,
-        dataPengguna
+        dataPicker
       );
       console.log(response.data);
     } catch (error) {
@@ -69,9 +69,9 @@ const ProfilePicker = () => {
           </label>
           <input
             type="text"
-            defaultValue={dataPengguna.nama}
+            defaultValue={dataPicker.nama}
             onChange={(e) =>
-              setDataPengguna({ ...dataPengguna, nama: e.target.value })
+              setDataPicker({ ...dataPicker, nama: e.target.value })
             }
             id="nama"
             className="text-md bg-gray-50 border border-gray-300 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
@@ -83,9 +83,9 @@ const ProfilePicker = () => {
           </label>
           <input
             type="email"
-            defaultValue={dataPengguna.email}
+            defaultValue={dataPicker.email}
             onChange={(e) =>
-              setDataPengguna({ ...dataPengguna, email: e.target.value })
+              setDataPicker({ ...dataPicker, email: e.target.value })
             }
             id="email"
             className="text-md bg-gray-50 border border-gray-300 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
@@ -97,10 +97,10 @@ const ProfilePicker = () => {
           </label>
           <input
             type="text"
-            defaultValue={dataPengguna.alamat}
+            defaultValue={dataPicker.alamat}
             id="alamat"
             onChange={(e) =>
-              setDataPengguna({ ...dataPengguna, alamat: e.target.value })
+              setDataPicker({ ...dataPicker, alamat: e.target.value })
             }
             className="text-md bg-gray-50 border border-gray-300 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
           />
@@ -111,10 +111,10 @@ const ProfilePicker = () => {
           </label>
           <input
             type="tel"
-            defaultValue={dataPengguna.telepon}
+            defaultValue={dataPicker.telepon}
             id="no_hp"
             onChange={(e) =>
-              setDataPengguna({ ...dataPengguna, telepon: e.target.value })
+              setDataPicker({ ...dataPicker, telepon: e.target.value })
             }
             className="text-md bg-gray-50 border border-gray-300 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
           />

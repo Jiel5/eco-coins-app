@@ -18,7 +18,7 @@ export function SidebarLinks(props) {
   const createLinks = (routes) => {
     return routes.map((route, index) => {
       if (
-        route.layout === "/picker" ||
+        (route.layout === "/picker" && route.path !== "profile") ||
         (route.layout === "/thrower" && route.path !== "profile")
       ) {
         return (
