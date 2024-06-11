@@ -1,13 +1,18 @@
 import {
   RiCopperCoinLine,
   RiDashboard2Line,
-  RiTokenSwapLine,
+  RiExchangeDollarLine,
 } from "react-icons/ri";
 import { HiOutlineTrash } from "react-icons/hi";
 import Dashboard from "../views/Thrower/dashboard/Index";
-import Koinku from "../views/Thrower/koinku/Index";
 import KategoriSampah from "../views/picker/Kategori";
 import NilaiKoin from "../views/picker/NilaiKoin";
+import AmbilSampah from "../views/picker/AmbilSampah";
+import RiwayatTransakasi from "../views/picker/Riwayat";
+import TransaksiKoinPicker from "../views/picker/transaksiKoin";
+import { MdOutlineHistory} from "react-icons/md";
+import RiwayatTransaksiKoinPengepul from "../views/picker/RiwayatTukarKoin";
+
 const PickerRoutes = [
   {
     name: "Main Dashboard",
@@ -21,7 +26,14 @@ const PickerRoutes = [
     layout: "/picker",
     path: "ambil",
     icon: <HiOutlineTrash className="h-6 w-6" />,
-    component: <Koinku />,
+    component: <AmbilSampah />,
+  },
+  {
+    name: "Riwayat Transaksi",
+    layout: "/picker",
+    path: "riwayat-transaksi-pengepul",
+    icon: <MdOutlineHistory className="h-6 w-6" />,
+    component: <RiwayatTransakasi />,
   },
   {
     name: "Kategori Sampah",
@@ -40,9 +52,16 @@ const PickerRoutes = [
   {
     name: "Tukar Koin",
     layout: "/picker",
-    path: "tukar",
-    icon: <RiTokenSwapLine className="h-6 w-6" />,
-    component: <Koinku />,
+    path: "redeem",
+    icon: <RiExchangeDollarLine className="h-6 w-6" />,
+    component: <TransaksiKoinPicker />,
+  },
+  {
+    name: "Riwayat Tukar Koin",
+    layout: "/picker",
+    path: "history-tukarKoin",
+    icon: <MdOutlineHistory className="h-6 w-6" />,
+    component: <RiwayatTransaksiKoinPengepul />,
   },
 ];
 export default PickerRoutes;

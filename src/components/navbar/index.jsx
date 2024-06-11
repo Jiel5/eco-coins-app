@@ -1,14 +1,20 @@
 import Dropdown from "../dropdown/index";
 import { FiAlignJustify } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import avatar from "../../assets/img/avatars/avatar4.png";
 import { useEffect, useState } from "react";
 
 const Navbar = (props) => {
   // eslint-disable-next-line react/prop-types
   const { onOpenSidenav, brandText } = props;
+  const navigate = useNavigate();
   const handleLogout = () => {
-    console.log("logout");
+    // Hapus token dari localStorage atau cookies
+    localStorage.removeItem("token");
+
+    // Redirect ke halaman login atau halaman lainnya
+    navigate("/");
+    console.log("User signed out.");
   };
 
   const [data, setData] = useState([]);
@@ -17,7 +23,7 @@ const Navbar = (props) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token"); // Get token from localStorage
-    const role = localStorage.getItem("role"); // Get token from localStorage
+    const role = localStorage.getItem("role");
     const id_pengepul = localStorage.getItem("id_pengepul"); // Get token from localStorage
     const id_pengguna = localStorage.getItem("id_pengguna"); // Get token from localStorage
     fetch(`http://localhost:9000/${role}/${id_pengepul || id_pengguna}`, {
@@ -88,7 +94,7 @@ const Navbar = (props) => {
         <div className="p-4">
           <div className="flex items-center gap-2">
             <p className="text-sm font-bold text-navy-700 dark:text-white">
-              👋 {data.nama}
+              👋 {data.nama || data.pengguna.nama}
             </p>{" "}
           </div>
         </div>
@@ -107,7 +113,7 @@ const Navbar = (props) => {
             <div className="p-4">
               <div className="flex items-center gap-2">
                 <p className="text-sm font-bold text-navy-700 dark:text-white">
-                  👋 {data.nama}
+                  👋 {data.nama || data.pengguna.nama}
                 </p>{" "}
               </div>
             </div>

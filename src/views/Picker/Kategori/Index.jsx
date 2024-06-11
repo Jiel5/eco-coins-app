@@ -309,7 +309,7 @@ const handleDelete = async () => {
         {/* Header */}
         <header className="relative flex items-center justify-between">
           <div className="text-xl font-bold text-navy-700 dark:text-white">
-            Kategori Sampah
+            Data Kategori Sampah
           </div>
         </header>
         {/* search */}
