@@ -30,7 +30,7 @@ const LoginPicker = () => {
       })
       .catch((error) => {
         console.error("Error logging in:", error);
-        setMessage("Error logging in. Please try again.");
+        setMessage("Email dan Password tidak valid");
       });
   };
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useMemo, useEffect } from "react";
 import {
   useGlobalFilter,
@@ -39,9 +40,17 @@ const NilaiKoin = () => {
 
   const fetchData = async () => {
     try {
+      const token = localStorage.getItem('token')
       const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/nilai-tukar`
+        `${import.meta.env.VITE_REACT_APP_API_URL}/nilai-tukar`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in Authorization header
+          },
+        }
       );
+
+      console.log(response.data)
       setTableData(response.data);
     } catch (error) {
       console.error(error);
@@ -135,11 +144,17 @@ const NilaiKoin = () => {
     e.preventDefault();
     if (!isEdit) {
       try {
+        const token = localStorage.getItem("token");
         const res = await axios.post(
           `${import.meta.env.VITE_REACT_APP_API_URL}/nilai-tukar`,
           {
             nilai_koin: Number(nilaiKoin),
             nilai_uang: Number(nilaiUang),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Include token in Authorization header
+            },
           }
         );
         handleCloseModal();
@@ -154,11 +169,17 @@ const NilaiKoin = () => {
       }
     } else {
       try {
+        const token = localStorage.getItem('token');
         const res = await axios.put(
           `${import.meta.env.VITE_REACT_APP_API_URL}/nilai-tukar/${id}`,
           {
             nilai_koin: Number(nilaiKoin),
             nilai_uang: Number(nilaiUang),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Include token in Authorization header
+            },
           }
         );
         handleCloseModal();
@@ -186,6 +207,7 @@ const NilaiKoin = () => {
 
   const handleDelete = async () => {
     try {
+      // eslint-disable-next-line no-unused-vars
       const res = await axios.delete(
         `${import.meta.env.VITE_REACT_APP_API_URL}/nilai-tukar/${id}`
       );
@@ -285,7 +307,7 @@ const NilaiKoin = () => {
         {/* Header */}
         <header className="relative flex items-center justify-between">
           <div className="text-xl font-bold text-navy-700 dark:text-white">
-            Nilai Tukar Koin
+            Data Nilai Tukar Koin
           </div>
         </header>
         {/* search */}
@@ -323,7 +345,10 @@ const NilaiKoin = () => {
 
         {/* table */}
         <div className="mt-6 overflow-x-scroll lg:mx-2 xl:overflow-x-hidden">
-          <table {...getTableProps()} className="w-full">
+          <table
+            {...getTableProps()}
+            className="w-full text-left border-collapse"
+          >
             <thead>
               {headerGroups.map((headerGroup, index) => (
                 <tr {...headerGroup.getHeaderGroupProps()} key={index}>
