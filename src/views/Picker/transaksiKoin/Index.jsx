@@ -1,33 +1,28 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 import Card from "../../../components/card";
+import Swal from "sweetalert2";
 
-const AmbilSampah = () => {
+const TransaksiKoinPicker = () => {
   const [pendingTransactions, setPendingTransactions] = useState([]);
-  const navigate = useNavigate(); // Initialize useNavigate hook
 
   useEffect(() => {
     const fetchPendingTransactions = async () => {
       try {
         const token = localStorage.getItem("token");
         const id_pengepul = localStorage.getItem("id_pengepul");
-        console.log("Token:", token); // Log token for debugging
-        console.log("ID Pengepul:", id_pengepul); // Log id_pengepul for debugging
-
         const response = await axios.get(
           `${
             import.meta.env.VITE_REACT_APP_API_URL
-          }/transaksi-sampah/pengepul/${id_pengepul}/status/pending`,
+          }/penukaran-koin/pengepul/${id_pengepul}/status/pending`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        console.log("Fetched Data:", response.data.data); // Log fetched data for debugging
-        setPendingTransactions(response.data.data); // Set data transaksi pending ke state
+        console.log(response.data);
+        setPendingTransactions(response.data.penukaranKoin); // Set data transaksi pending ke state
       } catch (error) {
         console.error("Error fetching pending transactions:", error);
       }
@@ -38,109 +33,88 @@ const AmbilSampah = () => {
 
   const handleVerify = async (transactionId) => {
     try {
-      const token = localStorage.getItem("token");
-      console.log("Token for Verify:", token); // Log token for debugging
+      const { value: keterangan } = await Swal.fire({
+        title: "Verification",
+        input: "text",
+        inputLabel: "Masukkan keterangan",
+        inputPlaceholder: "Keterangan",
+        showCancelButton: true,
+        inputValidator: (value) => {
+          if (!value) {
+            return "You need to write something!";
+          }
+        },
+      });
 
-      const response = await axios.post(
-        `${
-          import.meta.env.VITE_REACT_APP_API_URL
-        }/transaksi-sampah/${transactionId}/verify`,
-        {}, // Pass an empty object as the second parameter
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      if (keterangan) {
+        const token = localStorage.getItem("token");
+        const response = await axios.post(
+          `${
+            import.meta.env.VITE_REACT_APP_API_URL
+          }/penukaran-koin/${transactionId}/verify`,
+          { keterangan },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          Swal.fire("Success", "Transaksi Berhasil", "success");
+          // Update the state to remove the verified transaction
+          setPendingTransactions((prevTransactions) =>
+            prevTransactions.filter(
+              (transaction) => transaction.id_penukaran !== transactionId
+            )
+          );
         }
-      );
-
-      // Show success message and redirect
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Transaction verified successfully!",
-      }).then(() => {
-        navigate("/picker/riwayat-transaksi-pengepul"); // Redirect to transaction history
-      });
-
-      // Handle response if needed
-      console.log("Verify Response:", response);
-    } catch (error) {
-      // Show error message
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Failed to verify transaction!",
-      });
-
-      // Handle error
-      if (error.response) {
-        console.error("Error Response:", error.response);
-      } else if (error.request) {
-        console.error("Error Request:", error.request);
-      } else {
-        console.error("Error:", error.message);
       }
+    } catch (error) {
+      Swal.fire("Error", "Failed to verify transaction", "error");
+      console.error("Error verifying transaction:", error);
     }
   };
 
   const handleReject = async (transactionId) => {
     try {
       const token = localStorage.getItem("token");
-      console.log("Token for Reject:", token); // Log token for debugging
-
       const response = await axios.post(
         `${
           import.meta.env.VITE_REACT_APP_API_URL
-        }/transaksi-sampah/${transactionId}/reject`,
-        {}, // Pass an empty object as the second parameter
+        }/penukaran-koin/${transactionId}/reject`,
+        {},
         {
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         }
       );
 
-      // Show success message and redirect
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Transaction rejected successfully!",
-      }).then(() => {
-        navigate("/picker/riwayat-transaksi-pengepul"); // Redirect to transaction history
-      });
-
-      // Handle response if needed
-      console.log("Reject Response:", response.data);
-    } catch (error) {
-      // Show error message
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Failed to reject transaction!",
-      });
-
-      // Handle error
-      if (error.response) {
-        console.error("Error Response:", error.response);
-      } else if (error.request) {
-        console.error("Error Request:", error.request);
-      } else {
-        console.error("Error:", error.message);
+      if (response.status === 200) {
+        Swal.fire("Success", "Transaksi tukar koin berhasil di tolak", "success");
+        // Update the state to remove the rejected transaction
+        setPendingTransactions((prevTransactions) =>
+          prevTransactions.filter(
+            (transaction) => transaction.id_penukaran !== transactionId
+          )
+        );
       }
+    } catch (error) {
+      Swal.fire("Error", "Failed to reject transaction", "error");
+      console.error("Error rejecting transaction:", error);
     }
   };
-
   return (
     <>
       <Card extra={"w-full sm:overflow-auto p-4"}>
         <header className="relative flex items-center justify-between">
           <div className="text-xl font-bold text-navy-700 ml-2 mb-4 dark:text-white">
-            Data Pengambilan Sampah
+            Data Tukar Koin
           </div>
         </header>
 
-        {/* Data Pengambilan Sampah */}
+        {/* data transaksi */}
         <div className="mx-2 py-3 rounded-lg">
           <div className="overflow-x-scroll xl:overflow-x-hidden">
             <table className="w-full text-left border-collapse">
@@ -150,20 +124,19 @@ const AmbilSampah = () => {
                   <th className="border-b border-gray-300 px-4 py-2">
                     Pembuang
                   </th>
-                  <th className="border-b border-gray-300 px-4 py-2">Alamat</th>
                   <th className="border-b border-gray-300 px-4 py-2">
-                    Jenis Sampah
-                  </th>
-                  <th className="border-b border-gray-300 px-4 py-2">Berat</th>
-                  <th className="border-b border-gray-300 px-4 py-2">
-                    Nilai Koin Per KG
+                    No Hp
                   </th>
                   <th className="border-b border-gray-300 px-4 py-2">
-                    Jumlah Koin
+                    Tukar Koin
+                  </th>
+                  <th className="border-b border-gray-300 px-4 py-2">
+                    Jumlah Uang
                   </th>
                   <th className="border-b border-gray-300 px-4 py-2">
                     Tanggal
                   </th>
+                  <th className="border-b border-gray-300 px-4 py-2">Status</th>
                   <th className="border-b border-gray-300 px-4 py-2">Aksi</th>
                 </tr>
               </thead>
@@ -180,19 +153,29 @@ const AmbilSampah = () => {
                       {transaction.Pengguna.nama}
                     </td>
                     <td className="border-b border-gray-300 px-4 py-2">
-                      {transaction.Pengguna.alamat}
+                      {transaction.Pengguna.telepon}
                     </td>
                     <td className="border-b border-gray-300 px-4 py-2">
-                      {transaction.Sampah.jenis_sampah}
+                      {transaction.jumlah_uang === 50000
+                        ? "-1000"
+                        : transaction.jumlah_uang === 100000
+                        ? "-1500"
+                        : transaction.jumlah_uang === 150000
+                        ? "-2000"
+                        : transaction.jumlah_uang === 200000
+                        ? "-2500"
+                        : transaction.jumlah_uang === 250000
+                        ? "-3000"
+                        : transaction.jumlah_uang === 300000
+                        ? "-3500"
+                        : // nilai default jika tidak ada kondisi yang cocok
+                          "Nilai tidak tersedia"}
                     </td>
                     <td className="border-b border-gray-300 px-4 py-2">
-                      {transaction.berat_kg} Kg
-                    </td>
-                    <td className="border-b border-gray-300 px-4 py-2">
-                      {transaction.Sampah.nilai_koin_per_kg}
-                    </td>
-                    <td className="border-b border-gray-300 px-4 py-2">
-                      {transaction.jumlah_koin}
+                      <span className="mr-2">Rp.</span>
+                      {Intl.NumberFormat("id-ID").format(
+                        transaction.jumlah_uang
+                      )}
                     </td>
                     <td className="border-b border-gray-300 px-4 py-2">
                       {new Date(transaction.tanggal).toLocaleString("id-ID", {
@@ -203,15 +186,26 @@ const AmbilSampah = () => {
                       })}
                     </td>
                     <td className="border-b border-gray-300 px-4 py-2">
+                      <span
+                        className={`inline-block px-2 py-1 rounded-full text-xs ${
+                          transaction.status === "diterima"
+                            ? "bg-yellow-500 text-white"
+                            : "bg-yellow-500 text-white"
+                        }`}
+                      >
+                        {transaction.status}
+                      </span>
+                    </td>
+                    <td className="border-b border-gray-300 px-4 py-2">
                       <button
                         className="bg-green-500 hover:bg-green-600 text-white py-1 px-2 rounded-full text-xs"
-                        onClick={() => handleVerify(transaction.id_transaksi)}
+                        onClick={() => handleVerify(transaction.id_penukaran)}
                       >
                         Terima
                       </button>
                       <button
                         className="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-full text-xs ml-2"
-                        onClick={() => handleReject(transaction.id_transaksi)}
+                        onClick={() => handleReject(transaction.id_penukaran)}
                       >
                         Tolak
                       </button>
@@ -227,4 +221,4 @@ const AmbilSampah = () => {
   );
 };
 
-export default AmbilSampah;
+export default TransaksiKoinPicker;
