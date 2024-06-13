@@ -124,7 +124,7 @@ const handleSubmit = async () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const response = await axios.post(
-          "http://localhost:9000/transaksi-sampah",
+          `${import.meta.env.VITE_REACT_APP_API_URL}/transaksi-sampah`,
           data,
           {
             headers: {

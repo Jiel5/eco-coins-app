@@ -208,9 +208,17 @@ const NilaiKoin = () => {
   const handleDelete = async () => {
     try {
       // eslint-disable-next-line no-unused-vars
+      const token = localStorage.getItem('token')
       const res = await axios.delete(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/nilai-tukar/${id}`
+        `${import.meta.env.VITE_REACT_APP_API_URL}/nilai-tukar/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in Authorization header
+          },
+        }
       );
+
+      console.log(res)
       showToastHandler({
         show: true,
         message: "Kategori sampah dihapus!",
@@ -431,18 +439,22 @@ const NilaiKoin = () => {
                     <td className="flex gap-2 pt-[14px] pb-[16px] sm:text-[14px]">
                       <div
                         onClick={() => handleEdit(row.original)}
-                        className="w-8 h-8 rounded-lg bg-blue-500 cursor-pointer flex justify-center items-center"
+                        className="w-[55px] h-8 rounded-lg bg-cyan-500 cursor-pointer flex justify-center items-center"
                       >
-                        <MdEdit className=" text-white text-2xl" />
+                        <span className="text-white text-1xl font-semibold">
+                          Edit
+                        </span>
                       </div>
                       <div
                         onClick={() => {
                           setId(row.original.id_nilai_tukar_koin);
                           setModalIsOpenDelete(true);
                         }}
-                        className="w-8 h-8 rounded-lg bg-red-500 cursor-pointer flex justify-center items-center"
+                        className="w-[55px] h-8 rounded-lg bg-red-500 cursor-pointer flex justify-center items-center"
                       >
-                        <BiTrash className="cursor-pointer text-white text-2xl" />
+                        <span className="text-white text-1xl font-semibold">
+                          Hapus
+                        </span>
                       </div>
                     </td>
                   </tr>

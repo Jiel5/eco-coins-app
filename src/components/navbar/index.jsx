@@ -1,7 +1,7 @@
 import Dropdown from "../dropdown/index";
 import { FiAlignJustify } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
-import avatar from "../../assets/img/avatars/avatar4.png";
+import avatar from "/img/avatar4.png";
 import { useEffect, useState } from "react";
 
 const Navbar = (props) => {
@@ -11,6 +11,17 @@ const Navbar = (props) => {
   const handleLogout = () => {
     // Hapus token dari localStorage atau cookies
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
+
+    // Cek dan hapus id_pengepul jika ada
+    if (localStorage.getItem("id_pengepul")) {
+      localStorage.removeItem("id_pengepul");
+    }
+
+    // Cek dan hapus id_pengguna jika ada
+    if (localStorage.getItem("id_pengguna")) {
+      localStorage.removeItem("id_pengguna");
+    }
 
     // Redirect ke halaman login atau halaman lainnya
     navigate("/");
@@ -26,11 +37,16 @@ const Navbar = (props) => {
     const role = localStorage.getItem("role");
     const id_pengepul = localStorage.getItem("id_pengepul"); // Get token from localStorage
     const id_pengguna = localStorage.getItem("id_pengguna"); // Get token from localStorage
-    fetch(`http://localhost:9000/${role}/${id_pengepul || id_pengguna}`, {
-      headers: {
-        Authorization: `Bearer ${token}`, // Include token in Authorization header
-      },
-    })
+    fetch(
+      `${import.meta.env.VITE_REACT_APP_API_URL}/${role}/${
+        id_pengepul || id_pengguna
+      }`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include token in Authorization header
+        },
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

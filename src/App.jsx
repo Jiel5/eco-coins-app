@@ -7,12 +7,16 @@ import RegisterThrower from "./views/auth/RegisterThrower";
 import RegisterPicker from "./views/auth/RegisterPicker";
 import AuthIndex from "./views/auth/AuthIndex";
 import HomePage from "./views/homepage";
+import Tim from "./views/homepage/tim";
+import Artikel from "./views/homepage/artikel";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/*" element={ <HomePage/>} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/tim-kami" element={<Tim />}></Route>
+        <Route path="/artikel" element={<Artikel />}></Route>
         <Route path="/auth/" element={<AuthIndex />} />
         <Route path="/auth/picker" element={<LoginPicker />} />
         <Route path="/auth/picker/register" element={<RegisterPicker />} />

@@ -59,7 +59,7 @@ const AmbilSampah = () => {
         title: "Success",
         text: "Transaction verified successfully!",
       }).then(() => {
-        navigate("/picker/riwayat-transaksi"); // Redirect to transaction history
+        navigate("/picker/riwayat-transaksi-pengepul"); // Redirect to transaction history
       });
 
       // Handle response if needed
