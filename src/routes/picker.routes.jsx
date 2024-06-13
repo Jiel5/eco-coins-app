@@ -6,12 +6,12 @@ import {
 import { HiOutlineTrash } from "react-icons/hi";
 import { MdOutlineHistory } from "react-icons/md";
 import Dashboard from "../views/Thrower/dashboard/Index";
-import AmbilSampah from "../views/Picker/AmbilSampah/Index.jsx/";
-import RiwayatTransaksi from "../views/Picker/Riwayat/Index.jsx/";
-import KategoriSampah from "../views/Picker/Kategori/Index.jsx/";
-import NilaiKoin from "../views/Picker/NilaiKoin/Index.jsx/";
-import RiwayatTransaksiKoinPengepul from "../views/Picker/RiwayatTukarKoin/Index.jsx/";
-import TransaksiKoinPicker from "../views/Picker/transaksiKoin/Index.jsx/";
+import AmbilSampah from "../views/Picker/AmbilSampah/Index.jsx";
+import RiwayatTransaksi from "../views/Picker/Riwayat/Index.jsx";
+import KategoriSampah from "../views/Picker/Kategori/Index.jsx";
+import NilaiKoin from "../views/Picker/NilaiKoin/Index.jsx";
+import RiwayatTransaksiKoinPengepul from "../views/Picker/RiwayatTukarKoin/Index.jsx";
+import TransaksiKoinPicker from "../views/Picker/transaksiKoin/Index.jsx";
 
 const PickerRoutes = [
   {
@@ -47,21 +47,21 @@ const PickerRoutes = [
     layout: "/picker",
     path: "koin",
     icon: <RiCopperCoinLine className="h-6 w-6" />,
-    component: <NilaiKoin/>
+    component: <NilaiKoin />,
   },
   {
     name: "Tukar Koin",
     layout: "/picker",
     path: "redeem",
     icon: <RiExchangeDollarLine className="h-6 w-6" />,
-    component: <TransaksiKoinPicker />
+    component: <TransaksiKoinPicker />,
   },
   {
     name: "Riwayat Tukar Koin",
     layout: "/picker",
     path: "history-tukarKoin",
     icon: <MdOutlineHistory className="h-6 w-6" />,
-    component: <RiwayatTransaksiKoinPengepul/>
+    component: <RiwayatTransaksiKoinPengepul />,
   },
 ];
 export default PickerRoutes;
