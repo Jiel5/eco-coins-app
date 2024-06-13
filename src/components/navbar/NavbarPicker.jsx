@@ -1,13 +1,29 @@
 import Dropdown from "../dropdown/index";
 import { FiAlignJustify } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import avatar from "../../assets/img/avatars/avatar4.png";
+import { Link, useNavigate } from "react-router-dom";
+import avatar from "/img/avatar4.png";
 import { useEffect, useState } from "react";
 const NavbarPicker = (props) => {
+  const navigate = useNavigate()
   // eslint-disable-next-line react/prop-types
   const { onOpenSidenav, brandText } = props;
   const handleLogout = () => {
-    console.log("logout");
+    // Hapus token dari localStorage atau cookies
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+
+    // Cek dan hapus id_pengepul jika ada
+    if (localStorage.getItem("id_pengepul")) {
+      localStorage.removeItem("id_pengepul");
+    }
+
+    // Cek dan hapus id_pengguna jika ada
+    if (localStorage.getItem("id_pengguna")) {
+      localStorage.removeItem("id_pengguna");
+    }
+
+    // Redirect ke halaman login atau halaman lainnya
+    navigate("/");
   };
 
   const [data, setData] = useState([]);
@@ -18,7 +34,7 @@ const NavbarPicker = (props) => {
     const token = localStorage.getItem("token"); // Get token from localStorage
     const role = localStorage.getItem("role"); // Get token from localStorage
     const id_pengepul = localStorage.getItem("id_pengepul"); // Get token from localStorage
-    fetch(`http://localhost:9000/${role}/${id_pengepul}`, {
+    fetch(`${import.meta.env.VITE_REACT_APP_API_URL}/${role}/${id_pengepul}`, {
       headers: {
         Authorization: `Bearer ${token}`, // Include token in Authorization header
       },
@@ -86,7 +102,7 @@ const NavbarPicker = (props) => {
         <div className="p-4">
           <div className="flex items-center gap-2">
             <p className="text-sm font-bold text-navy-700 dark:text-white">
-              👋 Hey, {data.nama}
+              👋 {data.nama}
             </p>{" "}
           </div>
         </div>
@@ -105,7 +121,7 @@ const NavbarPicker = (props) => {
             <div className="p-4">
               <div className="flex items-center gap-2">
                 <p className="text-sm font-bold text-navy-700 dark:text-white">
-                  👋 Hey, {data.nama}
+                  👋, {data.nama}
                 </p>{" "}
               </div>
             </div>

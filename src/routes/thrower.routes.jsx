@@ -30,6 +30,13 @@ const ThrowerRoutes = [
     component: <Sampah />,
   },
   {
+    name: "Transaksi",
+    layout: "/thrower",
+    path: "transaksi",
+    icon: <RiExchangeDollarLine className="h-6 w-6" />,
+    component: <Transaksi />,
+  },
+  {
     name: "Riwayat Transaksi",
     layout: "/thrower",
     path: "riwayat",

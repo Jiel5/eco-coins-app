@@ -33,18 +33,14 @@ const NavbarThrower = (props) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token"); // Get token from localStorage
-<<<<<<< HEAD:src/components/navbar/NavbarThrower.jsx
     const role = localStorage.getItem("role"); // Get token from localStorage
     const id_pengguna = localStorage.getItem("id_pengguna"); // Get token from localStorage
-    fetch(`http://localhost:9000/${role}/${id_pengguna}`, {
+    const id_pengepul = localStorage.getItem("id_pengepul"); // Get token from localStorage
+    fetch(`${import.meta.env.VITE_REACT_APP_API_URL}/${role}/${id_pengguna}`, {
       headers: {
         Authorization: `Bearer ${token}`, // Include token in Authorization header
       },
-    })
-=======
-    const role = localStorage.getItem("role");
-    const id_pengepul = localStorage.getItem("id_pengepul"); // Get token from localStorage
-    const id_pengguna = localStorage.getItem("id_pengguna"); // Get token from localStorage
+    });
     fetch(
       `${import.meta.env.VITE_REACT_APP_API_URL}/${role}/${
         id_pengepul || id_pengguna
@@ -55,7 +51,6 @@ const NavbarThrower = (props) => {
         },
       }
     )
->>>>>>> c05cdf193b1885bf18e477fb865b0064be750db3:src/components/navbar/index.jsx
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

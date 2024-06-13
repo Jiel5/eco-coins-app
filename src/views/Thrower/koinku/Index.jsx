@@ -1,98 +1,4 @@
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
-import Card from "../../../components/card";
-import axios from "axios";
-import ModalDelete from "../../../components/modal/ModalDelete";
-import Toast from "../../../components/Toast/Index";
-const Koinku = () => {
-  const [coins, setCoins] = useState(0);
-  const [koinku, setDataKoinku] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [dataTukar, setDataTukar] = useState({});
-  const [toast, setToast] = useState({
-    show: false,
-    message: "",
-    type: "",
-  });
-  const [idPengepul, setIdPengepul] = useState(null);
-  const [dataPengepul, setDataPengepul] = useState([]);
-  const id_pengguna = 1;
-  useEffect(() => {
-    getKoinku();
-    getKoin();
-    getPengepul();
-  }, []);
-
-  const showToastHandler = ({ show, message, type }) => {
-    setToast({
-      show,
-      message,
-      type,
-    });
-    setTimeout(() => {
-      setToast({ show: false, message: "", type: "" }); // Menutup toast setelah 5 detik
-    }, 5000);
-  };
-
-  const getPengepul = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/pengepul`
-      );
-      setDataPengepul(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const getKoinku = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/nilai-tukar`
-      );
-      setDataKoinku(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getKoin = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/pengguna/${id_pengguna}`
-      );
-      setCoins(response.data.saldo_koin);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const tukarKoin = async () => {
-    const cekSaldo = coins - dataTukar.nilai_koin;
-    if (cekSaldo < 0) {
-      alert("Saldo anda tidak mencukupi");
-    } else {
-      const response = await axios.post(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/penukaran-koin`,
-        {
-          id_pengguna: 1,
-          id_pengepul: 1,
-          id_nilai_tukar_koin: 1,
-        }
-      );
-    }
-    getKoin();
-    setModalIsOpen(false);
-    showToastHandler({
-      show: true,
-      message: "Berhasil Tukar Koin!",
-      type: "success",
-    });
-  };
-  const openModal = async (data) => {
-    setModalIsOpen(true);
-    setDataTukar(data);
-  };
-=======
 import axios from "axios";
 import Card from "../../../components/card";
 import Swal from 'sweetalert2';
@@ -218,20 +124,8 @@ const Koinku = () => {
     });
   };
 
->>>>>>> c05cdf193b1885bf18e477fb865b0064be750db3
   return (
     <>
-      {/* toast */}
-      <div>
-        {toast.show && (
-          <Toast
-            message={toast.message}
-            icon={toast.type}
-            onClose={() => setToast({ show: false, message: "", type: "" })}
-          />
-        )}
-      </div>
-      {/* toast end */}
       <Card extra="w-full sm:overflow-auto p-4">
         <header className="relative flex items-center justify-between">
           <div className="text-xl font-bold text-navy-700 dark:text-white flex justify-center">
@@ -241,38 +135,6 @@ const Koinku = () => {
             Koin: <span className="font-bold mx-2">{coins}</span> EC
           </div>
         </header>
-<<<<<<< HEAD
-
-        {/* modal untuk tukar koin */}
-        <ModalDelete
-          setModalIsOpenDelete={() => setModalIsOpen(false)}
-          modalIsOpenDelete={modalIsOpen}
-          handleDelete={tukarKoin}
-          message={"Pilih Pengepul"}
-          textButton="Tukar"
-        >
-          <select
-            id="keterangan"
-            className="bg-gray-100 border border-black text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            value={idPengepul}
-            onChange={(e) => setIdPengepul(e.target.value)}
-          >
-            {dataPengepul.map((pengepul) => (
-              <option key={pengepul.id_pengepul} value={pengepul.id_pengepul}>
-                {pengepul.nama}
-              </option>
-            ))}
-          </select>
-        </ModalDelete>
-
-        {/* koin */}
-        <div className="flex flex-wrap gap-4 lg:gap-5 mt-4 justify-around">
-          {koinku.map((koin) => (
-            <button
-              className="w-[45%] lg:w-1/4 border-2 border-black rounded-lg overflow-hidden bg-gray-50 hover:scale-95 transition duration-300"
-              key={koin.id_nilai_tukar_koin}
-              onClick={() => openModal(koin)}
-=======
         <div className="w-full lg:w-[45%]">
           <label htmlFor="collectorSelect" className="block mb-2 font-semibold">
             Pilih Pengepul:
@@ -299,7 +161,6 @@ const Koinku = () => {
               }
               className="w-full lg:w-[45%] border-2 border-black rounded-lg overflow-hidden bg-gray-50 hover:shadow-md transition duration-300"
               key={koin.id_nilai_tukar_koin}
->>>>>>> c05cdf193b1885bf18e477fb865b0064be750db3
             >
               <div className="mx-4 my-2">
                 <p className="text-xl font-bold mb-1 text-start">EcoCoins</p>
@@ -310,13 +171,8 @@ const Koinku = () => {
                   </p>
                 </div>
               </div>
-<<<<<<< HEAD
-              <div className="text-end  py-1 lg:py-2 bg-green-400 rounded-t-lg">
-                <p className="mx-4 font-semibold">{koin.nilai_koin} PC</p>
-=======
               <div className="text-end py-1 lg:py-2 bg-green-400 rounded-b-lg">
                 <p className="mx-4 font-semibold">{koin.nilai_koin} EC</p>
->>>>>>> c05cdf193b1885bf18e477fb865b0064be750db3
               </div>
             </button>
           ))}
