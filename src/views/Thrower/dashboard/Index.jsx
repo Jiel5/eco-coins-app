@@ -8,17 +8,17 @@ const Dashboard = () => {
         <Widget
           icon={<MdPeople className="h-6 w-6" />}
           title={"Data Warga"}
-          subtitle={"2000"}
+          subtitle={"10"}
         />
         <Widget
           icon={<MdManageAccounts className="h-6 w-6" />}
           title={"Pengguna Aplikasi"}
-          subtitle={"2000"}
+          subtitle={"5"}
         />
         <Widget
           icon={<RiExchangeDollarLine className="h-6 w-6" />}
           title={"Riwayat Transaksi"}
-          subtitle={"2000"}
+          subtitle={"25"}
         />
       </div>
       <div className="mt-10">

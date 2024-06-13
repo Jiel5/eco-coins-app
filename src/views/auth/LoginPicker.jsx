@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Card from "../../components/card";
 import axios from "axios";
 import { useState } from "react";
+import logo from "/logo/logo1.png";
 
 const LoginPicker = () => {
   const [email, setEmail] = useState("");
@@ -30,7 +31,7 @@ const LoginPicker = () => {
       })
       .catch((error) => {
         console.error("Error logging in:", error);
-        setMessage("Error logging in. Please try again.");
+        setMessage("Email dan Password tidak valid");
       });
   };
   return (
@@ -53,9 +54,12 @@ const LoginPicker = () => {
               id="headerLogin"
               className="flex items-center flex-col justify-center"
             >
-              <h1 className="text-3xl font-bold text-navy-700 dark:text-white mb-2">
-                ECO <span className="text-green-600">COINS</span>
-              </h1>
+              <div className="flex justify-center items-center">
+                <img src={logo} width={65} alt="" />
+                <h1 className="text-4xl text-center font-bold  text-green-600 dark:text-white">
+                  ECO <span className="text-orange-400">COINS</span>
+                </h1>
+              </div>
               <h2 className="text-xl font-bold text-navy-700 dark:text-white">
                 Masuk dan Verifikasi
               </h2>

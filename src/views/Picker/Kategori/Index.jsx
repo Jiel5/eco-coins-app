@@ -169,14 +169,19 @@ const KategoriSampah = () => {
     } else {
       try {
         // eslint-disable-next-line no-unused-vars
+        const token = localStorage.getItem("token");
         const res = await axios.put(
           `${import.meta.env.VITE_REACT_APP_API_URL}/sampah/${id}`,
           {
             jenis_sampah: jenisSampah,
             nilai_koin_per_kg: Number(nilaiKoin),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Include token in Authorization header
+            },
           }
         );
-        
 
         handleCloseModal();
         showToastHandler({
@@ -201,30 +206,30 @@ const KategoriSampah = () => {
     setIsEdit(true);
   };
 
-const handleDelete = async () => {
-  try {
-    const token = localStorage.getItem("token"); // Retrieve token from localStorage
-    const res = await axios.delete(
-      `${import.meta.env.VITE_REACT_APP_API_URL}/sampah/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, // Include token in Authorization header
-        },
-      }
-    );
+  const handleDelete = async () => {
+    try {
+      const token = localStorage.getItem("token"); // Retrieve token from localStorage
+      const res = await axios.delete(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/sampah/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in Authorization header
+          },
+        }
+      );
 
-    showToastHandler({
-      show: true,
-      message: "Kategori sampah dihapus!",
-      type: "delete",
-    });
-    fetchData();
-    setModalIsOpenDelete(false);
-    setId("");
-  } catch (error) {
-    console.error(error);
-  }
-};
+      showToastHandler({
+        show: true,
+        message: "Kategori sampah dihapus!",
+        type: "delete",
+      });
+      fetchData();
+      setModalIsOpenDelete(false);
+      setId("");
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <>
       {/* toast */}
@@ -309,7 +314,7 @@ const handleDelete = async () => {
         {/* Header */}
         <header className="relative flex items-center justify-between">
           <div className="text-xl font-bold text-navy-700 dark:text-white">
-            Kategori Sampah
+            Data Kategori Sampah
           </div>
         </header>
         {/* search */}
@@ -429,18 +434,22 @@ const handleDelete = async () => {
                     <td className="flex gap-2 pt-[14px] pb-[16px] sm:text-[14px]">
                       <div
                         onClick={() => handleEdit(row.original)}
-                        className="w-8 h-8 rounded-lg bg-blue-500 cursor-pointer flex justify-center items-center"
+                        className="w-[55px] h-8 rounded-lg bg-cyan-500 cursor-pointer flex justify-center items-center"
                       >
-                        <MdEdit className=" text-white text-2xl" />
+                        <span className="text-white text-1xl font-semibold">
+                          Edit
+                        </span>
                       </div>
                       <div
                         onClick={() => {
                           setId(row.original.id_sampah);
                           setModalIsOpenDelete(true);
                         }}
-                        className="w-8 h-8 rounded-lg bg-red-500 cursor-pointer flex justify-center items-center"
+                        className="w-[55px] h-8 rounded-lg bg-red-500 cursor-pointer flex justify-center items-center"
                       >
-                        <BiTrash className="cursor-pointer text-white text-2xl" />
+                        <span className="text-white text-1xl font-semibold">
+                          Hapus
+                        </span>
                       </div>
                     </td>
                   </tr>

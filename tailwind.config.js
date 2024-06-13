@@ -120,6 +120,7 @@ export default {
       animation: {
         fade: "fadeOut 5s ease-in-out",
       },
+      // eslint-disable-next-line no-unused-vars
       keyframes: (theme) => ({
         fadeOut: {
           "0%": { display: "flex", opacity: "1" },

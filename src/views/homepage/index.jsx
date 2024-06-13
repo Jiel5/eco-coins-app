@@ -1,6 +1,7 @@
 import  { useState } from "react";
 import HeroImage from "../../assets/img/hero/hero.jpg";
-
+import logo from "/logo/logo2.png"
+import images from "/img/43124.jpg"
 function HomePage() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -14,8 +15,9 @@ function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between py-6">
               <div className="flex items-center">
+                <img src={logo} alt="" className="mr-2" width={50} />
                 <div className="flex-shrink-0">
-                  <a href="#beranda" className="text-white text-3xl font-bold">
+                  <a href="/" className="text-white text-3xl font-bold">
                     Eco Coins
                   </a>
                 </div>
@@ -23,22 +25,41 @@ function HomePage() {
               <div className="hidden md:block ml-auto">
                 <div className="flex items-baseline space-x-4">
                   <a
-                    href="#beranda"
-                    className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-lg font-medium"
+                    href="/"
+                    className="text-white hover:text-orange-400 px-3 py-2 rounded-md text-lg font-medium"
                   >
                     Beranda
                   </a>
                   <a
                     href="#profil"
-                    className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-lg font-medium"
+                    className="text-white hover:text-orange-400 px-3 py-2 rounded-md text-lg font-medium"
                   >
                     Tentang Kami
                   </a>
+
                   <a
-                    href="#dropdown"
-                    className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-lg font-medium"
+                    href="#kontak"
+                    className="text-white hover:text-orange-400 px-3 py-2 rounded-md text-lg font-medium"
                   >
                     Kontak
+                  </a>
+                  <a
+                    href="/tim-kami"
+                    className="text-white hover:text-orange-400 px-3 py-2 rounded-md text-lg font-medium"
+                  >
+                    Tim Kami
+                  </a>
+                  <a
+                    href="#kontak"
+                    className="text-white hover:text-orange-400 px-3 py-2 rounded-md text-lg font-medium"
+                  >
+                    Artikel
+                  </a>
+                  <a
+                    href="/auth"
+                    className="bg-white text-green-600 hover:bg-green-700 hover:text-orange-400 block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Login
                   </a>
                 </div>
               </div>
@@ -46,7 +67,7 @@ function HomePage() {
                 <button
                   onClick={toggleMenu}
                   type="button"
-                  className="inline-flex items-center p-2 w-10 h-10 justify-center text-lg text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                  className="inline-flex items-center p-2 w-10 h-10 justify-center text-lg text-white rounded-lg md:hidden hover:bg-green-800 focus:outline-none  dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                   aria-controls="navbar-sticky"
                   aria-expanded={isOpen}
                 >
@@ -78,21 +99,39 @@ function HomePage() {
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <a
                 href="#beranda"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                className="text-white hover:text-orange-400 block px-3 py-2 rounded-md text-base font-medium"
               >
                 Beranda
               </a>
               <a
                 href="#profil"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                className="text-white hover:text-orange-400 block px-3 py-2 rounded-md text-base font-medium"
               >
                 Tentang Kami
               </a>
               <a
-                href="#dropdown"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                href="#kontak"
+                className="text-white hover:text-orange-400 block px-3 py-2 rounded-md text-base font-medium"
               >
-                Dropdown
+                Kontak
+              </a>
+              <a
+                href="/tim-kami"
+                className="text-white hover:text-orange-400 block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Tim Kami
+              </a>
+              <a
+                href="/artikel"
+                className="text-white hover:text-orange-400 block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Artikel
+              </a>
+              <a
+                href="/auth"
+                className="bg-white text-green-600 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Login
               </a>
             </div>
           </div>
@@ -102,7 +141,7 @@ function HomePage() {
           <div className="lg:w-[650px] lg:px-5 flex flex-col gap-y-5">
             <h1 className="text-4xl md:text-5xl xl:text-[60px] leading-[1.2] md:max-w-xl md:mx-auto md:text-center lg:text-left lg:mx-0 lg:max-w-full font-semibold dark:text-white">
               Selamat Datang di{" "}
-              <span className="text-green-600">ECO COINS</span>
+              <span className="text-green-600">Eco Coins</span>
             </h1>
             <p className="text-md md:max-w-xl md:mx-auto lg:mx-0 lg:max-w-full md:text-center lg:text-left  text-gray-700 dark:text-white leading-relaxed mb-6">
               Bergabunglah dengan kami dalam menciptakan lingkungan yang lebih
@@ -112,7 +151,7 @@ function HomePage() {
             <div className="flex gap-x-5 flex-col gap-y-2.5 lg:flex-row">
               <a
                 href="/auth"
-                className="flex w-full lg:w-fit items-center text-white justify-center rounded-lg bg-green-600 px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200"
+                className="flex w-full lg:w-fit items-center text-white justify-center rounded-lg bg-green-600 px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200 hover:bg-green-700"
               >
                 <span>Mulai Sekarang</span>
               </a>
@@ -128,6 +167,11 @@ function HomePage() {
             <h2 className="text-2xl text-center font-semibold text-gray-800 dark:text-white lg:text-3xl">
               Tentang Kami
             </h2>
+            <div className="flex justify-center mx-auto mt-6">
+              <span className="inline-block w-40 h-1 bg-green-500 rounded-full"></span>
+              <span className="inline-block w-3 h-1 mx-1 bg-green-500 rounded-full"></span>
+              <span className="inline-block w-1 h-1 bg-green-500 rounded-full"></span>
+            </div>
             <div className="mt-8 text-justify">
               <p className="text-lg text-gray-700 dark:text-white leading-relaxed mb-6">
                 Eco Coins adalah platform yang bertujuan untuk membantu Anda
@@ -183,7 +227,7 @@ function HomePage() {
             <div className="max-w-screen-lg mx-auto grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-[150px] items-center">
               <div className="flex justify-center md:justify-end">
                 <img
-                  src="https://images.unsplash.com/photo-1717297808345-b740e9846158?q=80&w=856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src={images}
                   alt="Eco Coins"
                   className="w-full max-w-xs md:max-w-md lg:max-w-lg rounded-lg shadow-lg"
                 />
@@ -244,7 +288,7 @@ function HomePage() {
           </div>
         </section>
 
-        <section id="kontak" className="bg-white py-2">
+        <section id="kontak" className=" py-2">
           <div className="container mx-auto px-4">
             <p className="text-center font-semibold mb-4">
               *Jangkauan Bank sampah yang luas merubah sampah menjadi sumber
@@ -289,7 +333,7 @@ function HomePage() {
         <footer className="bg-green-600 text-white py-8">
           <div className="container mx-auto px-4">
             <p className="text-center">
-              &copy; 2024 ECO COINS. All rights reserved.
+              &copy; 2024 Eco Coins. All rights reserved.
             </p>
           </div>
         </footer>

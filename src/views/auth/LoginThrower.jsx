@@ -2,16 +2,17 @@ import { Link, useNavigate } from "react-router-dom";
 import Card from "../../components/card";
 import axios from "axios";
 import { useState } from "react";
+import logo from "/logo/logo1.png";
 
 const LoginThrower = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     axios
-      .post(`${import.meta.env.VITE_REACT_APP_API_URL}/login`, {
+      .post(`${import.meta.env.VITE_REACT_APP_API_URL}/login/pengguna`, {
         email,
         password,
       })
@@ -20,7 +21,7 @@ const LoginThrower = () => {
         if (response.data.token) {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("role", response.data.role);
-          localStorage.setItem("id_pengguna", response.data.id_pengepul);
+          localStorage.setItem("id_pengguna", response.data.id_pengguna);
           setMessage("Login successful!");
           navigate("/thrower/home");
         } else {
@@ -29,7 +30,7 @@ const LoginThrower = () => {
       })
       .catch((error) => {
         console.error("Error logging in:", error);
-        setMessage("Error logging in. Please try again.");
+        setMessage("Email dan Password tidak valid");
       });
   };
   return (
@@ -52,9 +53,12 @@ const LoginThrower = () => {
               id="headerLogin"
               className="flex items-center flex-col justify-center"
             >
-              <h1 className="text-3xl font-bold text-navy-700 dark:text-white mb-2">
-                ECO <span className="text-green-600">COINS</span>
-              </h1>
+              <div className="flex justify-center items-center">
+                <img src={logo} width={65} alt="" />
+                <h1 className="text-4xl text-center font-bold  text-green-600 dark:text-white">
+                  ECO <span className="text-orange-400">COINS</span>
+                </h1>
+              </div>
               <h2 className="text-xl font-bold text-navy-700 dark:text-white">
                 Masuk dan Verifikasi
               </h2>
@@ -74,9 +78,9 @@ const LoginThrower = () => {
                   <input
                     type="email"
                     id="email"
-                    placeholder="email@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    placeholder="email@example.com"
                     className="mt-2 text-md border border-gray-900 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                   />
                 </div>

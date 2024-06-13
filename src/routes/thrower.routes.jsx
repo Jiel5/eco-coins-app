@@ -11,6 +11,9 @@ import Transaksi from "../views/Thrower/transaksi/Index";
 import Riwayat from "../views/Thrower/riwayat/Index";
 import Koinku from "../views/Thrower/koinku/Index";
 import Profile from "../views/Thrower/profile/Index";
+import TransaksiKoin from "../views/Thrower/transaksiKoin";
+import RiwayatTransaksiKoin from "../views/Thrower/riwayatTukarKoin";
+import { FaCoins } from "react-icons/fa6";
 const ThrowerRoutes = [
   {
     name: "Main Dashboard",
@@ -39,6 +42,20 @@ const ThrowerRoutes = [
     path: "koinku",
     icon: <RiCopperCoinLine className="h-6 w-6" />,
     component: <Koinku />,
+  },
+  {
+    name: "Tukar Koin",
+    layout: "/thrower",
+    path: "tukar-koin",
+    icon: <FaCoins className="h-6 w-6" />,
+    component: <TransaksiKoin />,
+  },
+  {
+    name: "Riwayat Tukar Koin ",
+    layout: "/thrower",
+    path: "history-redeem-koin",
+    icon: <MdOutlineHistory className="h-6 w-6" />,
+    component: <RiwayatTransaksiKoin />,
   },
   {
     name: "Profile",

@@ -1,16 +1,18 @@
 import {
   RiCopperCoinLine,
   RiDashboard2Line,
-  RiTokenSwapLine,
+  RiExchangeDollarLine,
 } from "react-icons/ri";
 import { HiOutlineTrash } from "react-icons/hi";
 import Dashboard from "../views/Thrower/dashboard/Index";
-import KategoriSampah from "../views/Picker/Kategori/Index";
-import NilaiKoin from "../views/Picker/NilaiKoin/Index";
-import TukarKoin from "../views/Picker/TukarKoin/Index";
-import AmbilSampah from "../views/Picker/AmbilSampah/Index";
-import { MdPerson } from "react-icons/md";
-import ProfilePicker from "../views/Picker/Profile/Index";
+import KategoriSampah from "../views/picker/Kategori";
+import NilaiKoin from "../views/picker/NilaiKoin";
+import AmbilSampah from "../views/picker/AmbilSampah";
+import RiwayatTransakasi from "../views/picker/Riwayat";
+import TransaksiKoinPicker from "../views/picker/transaksiKoin";
+import { MdOutlineHistory} from "react-icons/md";
+import RiwayatTransaksiKoinPengepul from "../views/picker/RiwayatTukarKoin";
+
 const PickerRoutes = [
   {
     name: "Main Dashboard",
@@ -25,6 +27,13 @@ const PickerRoutes = [
     path: "ambil",
     icon: <HiOutlineTrash className="h-6 w-6" />,
     component: <AmbilSampah />,
+  },
+  {
+    name: "Riwayat Transaksi",
+    layout: "/picker",
+    path: "riwayat-transaksi-pengepul",
+    icon: <MdOutlineHistory className="h-6 w-6" />,
+    component: <RiwayatTransakasi />,
   },
   {
     name: "Kategori Sampah",
@@ -43,16 +52,16 @@ const PickerRoutes = [
   {
     name: "Tukar Koin",
     layout: "/picker",
-    path: "tukar",
-    icon: <RiTokenSwapLine className="h-6 w-6" />,
-    component: <TukarKoin />,
+    path: "redeem",
+    icon: <RiExchangeDollarLine className="h-6 w-6" />,
+    component: <TransaksiKoinPicker />,
   },
   {
-    name: "Profile",
+    name: "Riwayat Tukar Koin",
     layout: "/picker",
-    path: "profile",
-    icon: <MdPerson className="h-6 w-6" />,
-    component: <ProfilePicker />,
+    path: "history-tukarKoin",
+    icon: <MdOutlineHistory className="h-6 w-6" />,
+    component: <RiwayatTransaksiKoinPengepul />,
   },
 ];
 export default PickerRoutes;

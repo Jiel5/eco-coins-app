@@ -1,13 +1,30 @@
 import Dropdown from "../dropdown/index";
 import { FiAlignJustify } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import avatar from "../../assets/img/avatars/avatar4.png";
+import { Link, useNavigate } from "react-router-dom";
+import avatar from "/img/avatar4.png";
 import { useEffect, useState } from "react";
 const NavbarThrower = (props) => {
   // eslint-disable-next-line react/prop-types
   const { onOpenSidenav, brandText } = props;
+  const navigate = useNavigate();
   const handleLogout = () => {
-    console.log("logout");
+    // Hapus token dari localStorage atau cookies
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+
+    // Cek dan hapus id_pengepul jika ada
+    if (localStorage.getItem("id_pengepul")) {
+      localStorage.removeItem("id_pengepul");
+    }
+
+    // Cek dan hapus id_pengguna jika ada
+    if (localStorage.getItem("id_pengguna")) {
+      localStorage.removeItem("id_pengguna");
+    }
+
+    // Redirect ke halaman login atau halaman lainnya
+    navigate("/");
+    console.log("User signed out.");
   };
 
   const [data, setData] = useState([]);
@@ -16,6 +33,7 @@ const NavbarThrower = (props) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token"); // Get token from localStorage
+<<<<<<< HEAD:src/components/navbar/NavbarThrower.jsx
     const role = localStorage.getItem("role"); // Get token from localStorage
     const id_pengguna = localStorage.getItem("id_pengguna"); // Get token from localStorage
     fetch(`http://localhost:9000/${role}/${id_pengguna}`, {
@@ -23,6 +41,21 @@ const NavbarThrower = (props) => {
         Authorization: `Bearer ${token}`, // Include token in Authorization header
       },
     })
+=======
+    const role = localStorage.getItem("role");
+    const id_pengepul = localStorage.getItem("id_pengepul"); // Get token from localStorage
+    const id_pengguna = localStorage.getItem("id_pengguna"); // Get token from localStorage
+    fetch(
+      `${import.meta.env.VITE_REACT_APP_API_URL}/${role}/${
+        id_pengepul || id_pengguna
+      }`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include token in Authorization header
+        },
+      }
+    )
+>>>>>>> c05cdf193b1885bf18e477fb865b0064be750db3:src/components/navbar/index.jsx
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -86,7 +119,7 @@ const NavbarThrower = (props) => {
         <div className="p-4">
           <div className="flex items-center gap-2">
             <p className="text-sm font-bold text-navy-700 dark:text-white">
-              👋 {data.nama}
+              👋 {data.nama || data.pengguna.nama}
             </p>{" "}
           </div>
         </div>
@@ -105,7 +138,7 @@ const NavbarThrower = (props) => {
             <div className="p-4">
               <div className="flex items-center gap-2">
                 <p className="text-sm font-bold text-navy-700 dark:text-white">
-                  👋 {data.nama}
+                  👋 {data.nama || data.pengguna.nama}
                 </p>{" "}
               </div>
             </div>
