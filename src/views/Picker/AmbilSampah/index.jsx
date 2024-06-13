@@ -147,14 +147,14 @@ const AmbilSampah = () => {
               <thead>
                 <tr className="bg-gray-200">
                   <th className="border-b border-gray-300 px-4 py-2">No</th>
-                  <th className="border-b border-gray-300 px-4 py-2">Pembuang</th>
+                  <th className="border-b border-gray-300 px-4 py-2">
+                    Pembuang
+                  </th>
                   <th className="border-b border-gray-300 px-4 py-2">Alamat</th>
                   <th className="border-b border-gray-300 px-4 py-2">
                     Jenis Sampah
                   </th>
-                  <th className="border-b border-gray-300 px-4 py-2">
-                    Berat
-                  </th>
+                  <th className="border-b border-gray-300 px-4 py-2">Berat</th>
                   <th className="border-b border-gray-300 px-4 py-2">
                     Nilai Koin Per KG
                   </th>
