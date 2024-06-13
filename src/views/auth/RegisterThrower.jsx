@@ -69,13 +69,16 @@ const RegisterThrower = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:9000/pengguna", {
-        nama: formData.nama,
-        alamat: formData.alamat,
-        email: formData.email,
-        telepon: formData.telepon,
-        password: formData.password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/pengguna`,
+        {
+          nama: formData.nama,
+          alamat: formData.alamat,
+          email: formData.email,
+          telepon: formData.telepon,
+          password: formData.password,
+        }
+      );
 
       if (response.status === 201) {
         Swal.fire("Success", "Account registered successfully", "success");

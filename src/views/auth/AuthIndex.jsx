@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Card from "../../components/card";
+import logo from "/logo/logo1.png";
 
 const AuthIndex = () => {
   return (
@@ -7,11 +8,14 @@ const AuthIndex = () => {
       <Card extra="w-[90vw] lg:w-full sm:overflow-auto py-12 lg:px-4 lg:py-[10vh] max-w-5xl mx-auto">
         <div className="w-full flex flex-col lg:flex-row">
           <div className="w-full lg:w-1/2 h-full flex-col items-center justify-center lg:flex">
-            <div className="text-center lg:my-10">
-              <h1 className="text-4xl font-bold lg:mb-16 text-navy-700 dark:text-white ">
-                ECO <span className="text-green-600">COINS</span>
-              </h1>
-              <div className="lg:mt-5">
+            <div className="text-center lg:my-20">
+              <div className="flex justify-center items-center">
+                <img src={logo} width={65} alt="" />
+                <h1 className="text-4xl text-center font-bold  text-green-600 dark:text-white">
+                  ECO <span className="text-orange-400">COINS</span>
+                </h1>
+              </div>
+              <div className="lg:mt-4">
                 <h2 className="font-poppins text-lg lg:text-2xl font-bold text-navy-800 text-center">
                   Silahkan
                 </h2>

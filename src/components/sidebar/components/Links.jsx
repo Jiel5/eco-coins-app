@@ -31,8 +31,8 @@ export function SidebarLinks(props) {
                 <span
                   className={`${
                     activeRoute(route.path) === true
-                      ? "font-bold text-green-600 dark:text-white"
-                      : "font-medium text-gray-600"
+                      ? "font-bold text-navy-800 dark:text-white"
+                      : "font-medium text-white hover:text-navy-800"
                   }`}
                 >
                   {route.icon ? route.icon : <DashIcon />}{" "}
@@ -40,15 +40,15 @@ export function SidebarLinks(props) {
                 <p
                   className={`leading-1 ml-4 flex ${
                     activeRoute(route.path) === true
-                      ? "font-bold text-green-800 dark:text-white"
-                      : "font-medium text-gray-600"
+                      ? "font-bold text-navy-800 dark:text-white hover:text-navy-800"
+                      : "font-medium text-white hover:text-navy-800"
                   }`}
                 >
                   {route.name}
                 </p>
               </li>
               {activeRoute(route.path) ? (
-                <div className="absolute right-0 top-px h-7 w-1 rounded-lg bg-green-600 dark:bg-brand-400" />
+                <div className="absolute right-0 top-px h-7 w-1 rounded-lg bg-orange-400 dark:bg-brand-400" />
               ) : null}
             </div>
           </Link>
