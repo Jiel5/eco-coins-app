@@ -6,12 +6,12 @@ import {
 import { HiOutlineTrash } from "react-icons/hi";
 import { MdOutlineHistory } from "react-icons/md";
 import Dashboard from "../views/Thrower/dashboard/Index";
-import AmbilSampah from "../views/Picker/AmbilSampah/Index/";
-import RiwayatTransaksi from "../views/Picker/Riwayat/Index/";
-import KategoriSampah from "../views/Picker/Kategori/Index/";
-import NilaiKoin from "../views/Picker/NilaiKoin/Index";
-import RiwayatTransaksiKoinPengepul from "../views/Picker/RiwayatTukarKoin/Index/";
-import TransaksiKoinPicker from "../views/Picker/transaksiKoin/Index/";
+import AmbilSampah from "../views/Picker/AmbilSampah/Index.jsx/";
+import RiwayatTransaksi from "../views/Picker/Riwayat/Index.jsx";
+import KategoriSampah from "../views/Picker/Kategori/Index.jsx/";
+import NilaiKoin from "../views/Picker/NilaiKoin/Index.jsx/";
+import RiwayatTransaksiKoinPengepul from "../views/Picker/RiwayatTukarKoin/Index.jsx/";
+import TransaksiKoinPicker from "../views/Picker/transaksiKoin/Index.jsx/";
 
 const PickerRoutes = [
   {
