@@ -10,7 +10,7 @@ import AmbilSampah from "../views/Picker/AmbilSampah/Index/";
 // import RiwayatTransaksi from "../views/Picker/Riwayat/Index/";
 import KategoriSampah from "../views/Picker/Kategori/Index/";
 import NilaiKoin from "../views/Picker/NilaiKoin/Index";
-import RiwayatTransaksiKoinPengepul from "../views/Picker/RiwayatTukarKoin/Index/";
+// import RiwayatTransaksiKoinPengepul from "../views/Picker/RiwayatTukarKoin/Index/";
 import TransaksiKoinPicker from "../views/Picker/transaksiKoin/Index/";
 
 const PickerRoutes = [
