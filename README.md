@@ -9,14 +9,18 @@ To enable others to replicate our steps and contribute to the project, we have p
 1. Clone the repositories:
 
    **Frontend (eco-coins-app):** 
+
    git clone https://github.com/Jiel5/eco-coins-app.git
+
    cd eco-coins-app
 
    **Backend (restful-api-eco-coins):**
+
    git clone https://github.com/ZakiRaihan4636/restful-api-eco-coins.git
+
    cd restful-api-eco-coins
 
-2. Install dependencies:
+3. Install dependencies:
    
    **Frontend (eco-coins-app):**
    npm install
@@ -24,7 +28,7 @@ To enable others to replicate our steps and contribute to the project, we have p
    **Backend (restful-api-eco-coins):**
    npm install
 
-3. Start the development servers:
+4. Start the development servers:
 
    **Frontend (eco-coins-app):**
    npm start dev
@@ -32,7 +36,7 @@ To enable others to replicate our steps and contribute to the project, we have p
    **Backend (restful-api-eco-coins):**
    npm start-run dev
   
-4. User Guide
+5. User Guide
    
     **Overview :**
     The Eco Coins App is a platform designed to encourage proper waste disposal by rewarding users with coins that can be converted into      money.
