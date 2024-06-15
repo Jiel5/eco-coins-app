@@ -13,7 +13,7 @@ To enable others to replicate our steps and contribute to the project, we have p
    cd eco-coins-app
 
    **Backend (restful-api-eco-coins):**
-   git clone https://github.com/Jiel5/restful-api-eco-coins.git
+   git clone https://github.com/ZakiRaihan4636/restful-api-eco-coins.git
    cd restful-api-eco-coins
 
 2. Install dependencies:
