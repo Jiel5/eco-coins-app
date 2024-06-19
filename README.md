@@ -91,9 +91,6 @@ To enable others to replicate our steps and contribute to the project, we have p
    
     e. Open a pull request.
   
-    **Code Standards :**
-    Follow the JavaScript Standard Style.
-  
     **Pull Requests :**
     
     a. Ensure your pull request is descriptive and includes what changes you have made.
